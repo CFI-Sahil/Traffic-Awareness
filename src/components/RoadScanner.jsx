@@ -33,7 +33,6 @@ const RoadScanner = ({ isOpen, onClose }) => {
     const [result, setResult] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [showCameraConfirm, setShowCameraConfirm] = useState(false);
     const keyIndexRef = useRef(0);
     const fileInputRef = useRef(null);
     const cameraInputRef = useRef(null);
@@ -50,14 +49,9 @@ const RoadScanner = ({ isOpen, onClose }) => {
     };
 
     const handleCameraClick = () => {
-        setShowCameraConfirm(true);
-    };
-
-    const confirmCamera = () => {
         if (cameraInputRef.current) {
             cameraInputRef.current.click();
         }
-        setShowCameraConfirm(false);
     };
 
     const convertToBase64 = (file) => {
@@ -139,7 +133,6 @@ const RoadScanner = ({ isOpen, onClose }) => {
         setPreview(null);
         setResult(null);
         setError(null);
-        setShowCameraConfirm(false);
         if (fileInputRef.current) fileInputRef.current.value = "";
         if (cameraInputRef.current) cameraInputRef.current.value = "";
     };
@@ -189,77 +182,47 @@ const RoadScanner = ({ isOpen, onClose }) => {
                             {!preview ? (
                                 <div className="h-64 relative overflow-hidden bg-gray-50 rounded-2xl">
                                     <AnimatePresence mode="wait">
-                                        {!showCameraConfirm ? (
-                                            <motion.div
-                                                key="selection"
-                                                initial={{ opacity: 0, x: -20 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                exit={{ opacity: 0, x: 20 }}
-                                                className="grid grid-cols-2 gap-4 h-full p-1"
+                                        <motion.div
+                                            key="selection"
+                                            initial={{ opacity: 0, x: -20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            exit={{ opacity: 0, x: 20 }}
+                                            className="grid grid-cols-2 gap-4 h-full p-1"
+                                        >
+                                            <button
+                                                onClick={handleCameraClick}
+                                                className="border-2 border-dashed border-blue-200 rounded-2xl flex flex-col items-center justify-center gap-3 hover:bg-blue-50 transition-all cursor-pointer group"
                                             >
-                                                <button
-                                                    onClick={handleCameraClick}
-                                                    className="border-2 border-dashed border-blue-200 rounded-2xl flex flex-col items-center justify-center gap-3 hover:bg-blue-50 transition-all cursor-pointer group"
-                                                >
-                                                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform">
-                                                        <CameraIcon />
-                                                    </div>
-                                                    <p className="font-bold text-blue-800">Direct Capture</p>
-                                                    <input
-                                                        ref={cameraInputRef}
-                                                        type="file"
-                                                        accept="image/*"
-                                                        capture="environment"
-                                                        onChange={handleFileChange}
-                                                        className="hidden"
-                                                    />
-                                                </button>
-                                                <button
-                                                    onClick={() => fileInputRef.current?.click()}
-                                                    className="border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center gap-3 hover:bg-gray-50 transition-all cursor-pointer group"
-                                                >
-                                                    <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 group-hover:scale-110 transition-transform">
-                                                        <GalleryIcon />
-                                                    </div>
-                                                    <p className="font-bold text-gray-800">Upload Gallery</p>
-                                                    <input
-                                                        ref={fileInputRef}
-                                                        type="file"
-                                                        accept="image/*"
-                                                        onChange={handleFileChange}
-                                                        className="hidden"
-                                                    />
-                                                </button>
-                                            </motion.div>
-                                        ) : (
-                                            <motion.div
-                                                key="confirm"
-                                                initial={{ opacity: 0, scale: 0.9 }}
-                                                animate={{ opacity: 1, scale: 1 }}
-                                                exit={{ opacity: 0, scale: 0.9 }}
-                                                className="flex flex-col items-center justify-center h-full p-8 text-center"
-                                            >
-                                                <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-blue-500 mb-4 animate-bounce">
+                                                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform">
                                                     <CameraIcon />
                                                 </div>
-                                                <h3 className="text-lg font-bold text-gray-800 mb-2">Camera Access Required</h3>
-                                                <p className="text-sm text-gray-500 mb-6 font-medium">SigSense needs your permission to open the camera and analyze road signs in real-time.</p>
-                                                <div className="flex gap-3 w-full max-w-xs">
-                                                    <button
-                                                        onClick={() => setShowCameraConfirm(false)}
-                                                        className="flex-1 py-3 border border-gray-200 rounded-xl font-bold text-gray-600 hover:bg-gray-100 cursor-pointer"
-                                                    >
-                                                        Cancel
-                                                    </button>
-                                                    <button
-                                                        onClick={confirmCamera}
-                                                        className="flex-1 py-3 bg-blue-600 rounded-xl font-bold text-white hover:bg-blue-700 shadow-lg shadow-blue-200 cursor-pointer"
-                                                    >
-                                                        Open Camera
-                                                    </button>
+                                                <p className="font-bold text-blue-800">Direct Capture</p>
+                                                <input
+                                                    ref={cameraInputRef}
+                                                    type="file"
+                                                    accept="image/*"
+                                                    capture="environment"
+                                                    onChange={handleFileChange}
+                                                    className="hidden"
+                                                />
+                                            </button>
+                                            <button
+                                                onClick={() => fileInputRef.current?.click()}
+                                                className="border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center gap-3 hover:bg-gray-50 transition-all cursor-pointer group"
+                                            >
+                                                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 group-hover:scale-110 transition-transform">
+                                                    <GalleryIcon />
                                                 </div>
-                                            </motion.div>
-                                        )}
+                                                <p className="font-bold text-gray-800">Upload Gallery</p>
+                                                <input
+                                                    ref={fileInputRef}
+                                                    type="file"
+                                                    accept="image/*"
+                                                    onChange={handleFileChange}
+                                                    className="hidden"
+                                                />
+                                            </button>
+                                        </motion.div>
                                     </AnimatePresence>
                                 </div>
                             ) : (
