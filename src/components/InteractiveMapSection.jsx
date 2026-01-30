@@ -674,6 +674,8 @@ const InteractiveMapSection = () => {
                         <MapContainer
                             center={userLocation || defaultCenter}
                             zoom={14}
+                            dragging={false}
+                            keyboard={false}
                             style={{ height: "100%", width: "100%" }}
                         >
                             <TileLayer
