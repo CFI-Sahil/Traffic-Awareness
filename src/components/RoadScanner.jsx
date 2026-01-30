@@ -81,7 +81,7 @@ const RoadScanner = ({ isOpen, onClose }) => {
             try {
                 const currentKey = API_KEYS[keyIndexRef.current];
                 const genAI = new GoogleGenerativeAI(currentKey);
-                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+                const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
                 const base64Data = await convertToBase64(image);
 
                 const result = await model.generateContent([
