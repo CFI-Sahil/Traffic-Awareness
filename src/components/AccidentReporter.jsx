@@ -4,6 +4,9 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // -- Configuration & API Keys --
 const API_KEYS = [
+    import.meta.env.VITE_GEMINI_KEY_1,
+    import.meta.env.VITE_GEMINI_KEY_2,
+    import.meta.env.VITE_GEMINI_KEY_3,
     import.meta.env.VITE_GEMINI_KEY_4,
     import.meta.env.VITE_GEMINI_KEY_5,
     import.meta.env.VITE_GEMINI_KEY_6,
