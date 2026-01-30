@@ -104,10 +104,14 @@ const SigSenseBot = () => {
                 }
                 setIsTyping(false);
             } catch (error) {
-                // Check if error is Rate Limit (429) or Quota related
-                const isRateLimit = error.message?.includes("429") || error.message?.includes("quota");
+                // Check if error is Rate Limit (429), Quota, or Leaked (403)
+                const isRetryable = error.message?.includes("429") ||
+                    error.message?.includes("quota") ||
+                    error.message?.includes("403") ||
+                    error.message?.includes("forbidden") ||
+                    error.message?.includes("leaked");
 
-                if (isRateLimit && retryCount < API_KEYS.length - 1) {
+                if (isRetryable && retryCount < API_KEYS.length - 1) {
                     console.warn(`Key ${keyIndexRef.current} exhausted. Rotating...`);
 
                     // Move to next key

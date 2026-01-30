@@ -108,12 +108,18 @@ const AccidentReporter = ({ isOpen, onClose, onSwitchToScan }) => {
                 const jsonResult = JSON.parse(cleanJson);
                 setResult(jsonResult);
             } catch (err) {
-                const isRateLimit = err.message?.includes("429") || err.message?.includes("quota");
-                if (isRateLimit && retryCount < API_KEYS.length - 1) {
+                // Check if error is Rate Limit (429), Quota, or Leaked (403)
+                const isRetryable = err.message?.includes("429") ||
+                    err.message?.includes("quota") ||
+                    err.message?.includes("403") ||
+                    err.message?.includes("forbidden") ||
+                    err.message?.includes("leaked");
+
+                if (isRetryable && retryCount < API_KEYS.length - 1) {
                     keyIndexRef.current = (keyIndexRef.current + 1) % API_KEYS.length;
                     return attemptAnalysis(retryCount + 1);
                 } else {
-                    setError("Unable to process the report. Please try again or use standard emergency numbers.");
+                    setError("Unable to process the report. Please try again with fresh API keys.");
                     console.error(err);
                 }
             }

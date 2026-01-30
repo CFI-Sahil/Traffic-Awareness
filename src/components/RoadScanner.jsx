@@ -112,10 +112,14 @@ const RoadScanner = ({ isOpen, onClose }) => {
                     });
                 }
             } catch (err) {
-                // Check if error is Rate Limit (429) or Quota related
-                const isRateLimit = err.message?.includes("429") || err.message?.includes("quota");
+                // Check if error is Rate Limit (429), Quota, or Leaked (403)
+                const isRetryable = err.message?.includes("429") ||
+                    err.message?.includes("quota") ||
+                    err.message?.includes("403") ||
+                    err.message?.includes("forbidden") ||
+                    err.message?.includes("leaked");
 
-                if (isRateLimit && retryCount < API_KEYS.length - 1) {
+                if (isRetryable && retryCount < API_KEYS.length - 1) {
                     console.warn(`RoadScanner: Key ${keyIndexRef.current} exhausted. Rotating...`);
                     keyIndexRef.current = (keyIndexRef.current + 1) % API_KEYS.length;
                     return attemptAnalysis(retryCount + 1);
