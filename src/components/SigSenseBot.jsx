@@ -107,11 +107,12 @@ const SigSenseBot = () => {
                 }
                 setIsTyping(false);
             } catch (error) {
-                // Check if error is Rate Limit (429), Quota, or Leaked (403)
+                // Check if error is Rate Limit (429), Quota, or Invalid/Leaked (400/403)
                 const isRetryable = error.message?.includes("429") ||
                     error.message?.includes("quota") ||
+                    error.message?.includes("400") ||
                     error.message?.includes("403") ||
-                    error.message?.includes("forbidden") ||
+                    error.message?.includes("invalid") ||
                     error.message?.includes("leaked");
 
                 if (isRetryable && retryCount < API_KEYS.length - 1) {

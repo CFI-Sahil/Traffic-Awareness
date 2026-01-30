@@ -115,10 +115,12 @@ const RoadScanner = ({ isOpen, onClose }) => {
                     });
                 }
             } catch (err) {
-                // Check if error is Rate Limit (429), Quota, or Leaked (403)
+                // Check if error is Rate Limit (429), Quota, or Invalid/Leaked (400/403)
                 const isRetryable = err.message?.includes("429") ||
                     err.message?.includes("quota") ||
+                    err.message?.includes("400") ||
                     err.message?.includes("403") ||
+                    err.message?.includes("invalid") ||
                     err.message?.includes("forbidden") ||
                     err.message?.includes("leaked");
 
