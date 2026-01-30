@@ -44,7 +44,7 @@ const SigSenseBot = () => {
             const currentKey = API_KEYS[keyIndexRef.current];
             const genAI = new GoogleGenerativeAI(currentKey);
             const model = genAI.getGenerativeModel({
-                model: "gemini-2.5-flash",
+                model: "gemini-1.5-flash",
                 systemInstruction: SYSTEM_PROMPT
             });
 
