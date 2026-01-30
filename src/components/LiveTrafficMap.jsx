@@ -50,7 +50,14 @@ const LiveTrafficMap = ({ incidents, center }) => {
 
     return (
         <div className="h-full w-full rounded-xl overflow-hidden relative z-0">
-            <MapContainer center={position} zoom={11} scrollWheelZoom={false} style={{ height: '100%', width: '100%', background: '#111' }}>
+            <MapContainer
+                center={position}
+                zoom={11}
+                scrollWheelZoom={true}
+                dragging={false}
+                keyboard={false}
+                style={{ height: '100%', width: '100%', background: '#111' }}
+            >
                 <MapUpdater center={center} />
                 {/* Dark Matter Tiles */}
                 <TileLayer
