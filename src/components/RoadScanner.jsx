@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 // 1. Change the import path and class name
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
@@ -28,6 +29,7 @@ Output Schema:
 }`;
 
 const RoadScanner = ({ isOpen, onClose }) => {
+    const { t, language } = useLanguage();
     const [image, setImage] = useState(null);
     const [preview, setPreview] = useState(null);
     const [result, setResult] = useState(null);
@@ -68,6 +70,8 @@ const RoadScanner = ({ isOpen, onClose }) => {
         setIsLoading(true);
         setError(null);
 
+        const currentLang = language === 'hi' ? 'Hindi' : 'English';
+
         const attemptAnalysis = async (retryCount = 0) => {
             try {
                 const currentKey = API_KEYS[keyIndexRef.current];
@@ -76,7 +80,7 @@ const RoadScanner = ({ isOpen, onClose }) => {
                 const base64Data = await convertToBase64(image);
 
                 const result = await model.generateContent([
-                    SCAN_PROMPT,
+                    `${SCAN_PROMPT}\n\nCRITICAL: Return all text fields (name, explanation, safety_tip, better_photo_tip) in ${currentLang} language.`,
                     {
                         inlineData: {
                             data: base64Data,
@@ -164,8 +168,8 @@ const RoadScanner = ({ isOpen, onClose }) => {
                                     <ScanIcon />
                                 </div>
                                 <div>
-                                    <h2 className="text-xl font-bold">AI Road Scanner</h2>
-                                    <p className="text-xs text-blue-300 font-medium uppercase tracking-wider">AI Powered Analysis</p>
+                                    <h2 className="text-xl font-bold">{t('scanner.title')}</h2>
+                                    <p className="text-xs text-blue-300 font-medium uppercase tracking-wider">{t('scanner.subtitle')}</p>
                                 </div>
                             </div>
                             <button
@@ -195,7 +199,7 @@ const RoadScanner = ({ isOpen, onClose }) => {
                                                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform">
                                                     <CameraIcon />
                                                 </div>
-                                                <p className="font-bold text-blue-800">Direct Capture</p>
+                                                <p className="font-bold text-blue-800">{t('scanner.direct_capture')}</p>
                                                 <input
                                                     ref={cameraInputRef}
                                                     type="file"
@@ -212,7 +216,7 @@ const RoadScanner = ({ isOpen, onClose }) => {
                                                 <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 group-hover:scale-110 transition-transform">
                                                     <GalleryIcon />
                                                 </div>
-                                                <p className="font-bold text-gray-800">Upload Gallery</p>
+                                                <p className="font-bold text-gray-800">{t('scanner.upload_gallery')}</p>
                                                 <input
                                                     ref={fileInputRef}
                                                     type="file"
@@ -251,12 +255,12 @@ const RoadScanner = ({ isOpen, onClose }) => {
                                                 {isLoading ? (
                                                     <>
                                                         <LoadingSpinner />
-                                                        Analyzing...
+                                                        {t('scanner.analyzing')}
                                                     </>
                                                 ) : (
                                                     <>
                                                         <ScanIcon className="w-5 h-5" />
-                                                        <p className='cursor-pointer'>Scan Now</p>
+                                                        <p className='cursor-pointer'>{t('scanner.scan_now')}</p>
                                                     </>
                                                 )}
                                             </button>
@@ -285,7 +289,7 @@ const RoadScanner = ({ isOpen, onClose }) => {
                                                     {result.detection_status === 'low_confidence' ? <ScanIcon /> : <InfoIcon />}
                                                 </div>
                                                 <h3 className="font-bold text-gray-800">
-                                                    {result.detection_status === 'low_confidence' ? "Attention Needed" : "Analysis Complete"}
+                                                    {result.detection_status === 'low_confidence' ? t('scanner.attention_needed') : t('scanner.analysis_complete')}
                                                 </h3>
                                             </div>
 
@@ -298,7 +302,7 @@ const RoadScanner = ({ isOpen, onClose }) => {
                                                 </div>
 
                                                 <div className="p-4 bg-red-50 border-l-4 border-red-500 rounded-r-xl">
-                                                    <strong className="text-red-900 text-xs md:text-sm uppercase tracking-wider">Safety Protocol</strong>
+                                                    <strong className="text-red-900 text-xs md:text-sm uppercase tracking-wider">{t('scanner.safety_protocol')}</strong>
                                                     <p className="text-red-700 font-medium text-sm md:text-base mt-1">
                                                         {result.safety_tip}
                                                     </p>
@@ -306,7 +310,7 @@ const RoadScanner = ({ isOpen, onClose }) => {
 
                                                 {result.detection_status === 'low_confidence' && result.better_photo_tip && (
                                                     <div className="p-4 bg-blue-50 border-l-4 border-blue-400 rounded-r-xl border-dashed">
-                                                        <strong className="text-blue-900 text-sm uppercase tracking-wider">Improve Accuracy</strong>
+                                                        <strong className="text-blue-900 text-sm uppercase tracking-wider">{t('scanner.improve_accuracy')}</strong>
                                                         <p className="text-blue-700 font-medium text-sm md:text-base mt-1 italic">
                                                             {result.better_photo_tip}
                                                         </p>
@@ -318,7 +322,7 @@ const RoadScanner = ({ isOpen, onClose }) => {
                                                 onClick={clearScanner}
                                                 className="mt-6 w-full py-4 bg-white border border-gray-200 text-gray-600 rounded-2xl hover:bg-gray-50 transition-all font-bold shadow-sm active:scale-[0.98] cursor-pointer"
                                             >
-                                                Scan New
+                                                {t('scanner.scan_new')}
                                             </button>
                                         </motion.div>
                                     )}

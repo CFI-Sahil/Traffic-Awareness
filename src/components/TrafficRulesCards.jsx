@@ -1,12 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 const TrafficRulesCards = () => {
+    const { t } = useLanguage();
     const rules = [
         {
             id: 1,
-            title: "Follow Traffic Police",
-            description: "Always follow the instructions and hand signals given by traffic police officers.",
+            title: t('traffic_rules.rules_1_title'),
+            description: t('traffic_rules.rules_1_desc'),
             icon: (
                 <svg className="w-16 h-16 text-slate-800" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
@@ -15,8 +17,8 @@ const TrafficRulesCards = () => {
         },
         {
             id: 2,
-            title: "No Mobile Phones",
-            description: "Do not use mobile phones while driving. It distracts and causes accidents.",
+            title: t('traffic_rules.rules_2_title'),
+            description: t('traffic_rules.rules_2_desc'),
             icon: (
                 <svg className="w-16 h-16 text-slate-800" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm-5 21c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5-5H7V4h10v13z" />
@@ -25,8 +27,8 @@ const TrafficRulesCards = () => {
         },
         {
             id: 3,
-            title: "Rash Driving",
-            description: "Avoid rash and aggressive driving. Patience on the road saves lives.",
+            title: t('traffic_rules.rules_3_title'),
+            description: t('traffic_rules.rules_3_desc'),
             icon: (
                 <svg className="w-16 h-16 text-slate-800" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M18.92,6.01C18.72,5.42 18.16,5 17.5,5H6.5C5.84,5 5.28,5.42 5.08,6.01L3,12V20C3,20.55 3.45,21 4,21H5C5.55,21 6,20.55 6,20V19H18V20C18,20.55 18.45,21 19,21H20C20.55,21 21,20.55 21,20V12L18.92,6.01ZM6.5,16C5.67,16 5,15.33 5,14.5C5,13.67 5.67,13 6.5,13C7.33,13 8,13.67 8,14.5C8,15.33 7.33,16 6.5,16ZM17.5,16C16.67,16 16,15.33 16,14.5C16,13.67 16.67,13 17.5,13C18.33,13 19,13.67 19,14.5C19,15.33 18.33,16 17.5,16ZM5,11L6.5,7H17.5L19,11H5Z" />
@@ -35,8 +37,8 @@ const TrafficRulesCards = () => {
         },
         {
             id: 4,
-            title: "Valid Documents",
-            description: "Carry valid driving documents (DL, RC, Insurance) at all times.",
+            title: t('traffic_rules.rules_4_title'),
+            description: t('traffic_rules.rules_4_desc'),
             icon: (
                 <svg className="w-16 h-16 text-slate-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import sigSenseLogo from '../assets/sigsense_logo_cutout.png';
 
@@ -10,24 +11,36 @@ const API_KEYS = [
     import.meta.env.VITE_TRAFFIC_API_KEY_2
 ];
 
-const SYSTEM_PROMPT = `You are the "SigSense Traffic Safety Assistant."
+const getSystemPrompt = (lang) => `You are the "SigSense Traffic Safety Assistant."
 
 CORE DIRECTIVE: Provide the answer EXACTLY as asked.
 - NO greetings (e.g., "Hello", "Sure").
 - NO filler phrases (e.g., "Here is the information", "I can help with that").
 - NO elaboration unless explicitly asked.
 - JUST THE FACTS.
+- ANSWER IN ${lang === 'hi' ? 'HINDI' : 'ENGLISH'}.
 
 SCOPE: Only Indian traffic laws, road safety, and driving rules.
-If out of scope: "I only answer traffic rules and road safety questions."`;
+If out of scope: "${lang === 'hi' ? 'मैं केवल यातायात नियमों और सड़क सुरक्षा प्रश्नों के उत्तर देता हूँ।' : 'I only answer traffic rules and road safety questions.'}"`;
 
 const SigSenseBot = () => {
+    const { t, language } = useLanguage();
     const [isOpen, setIsOpen] = useState(false);
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState([
-        { role: 'bot', text: "I am SigSense AI. How may I help you with Indian traffic rules and road safety today?" }
+        { role: 'bot', text: t('chatbot.welcome') }
     ]);
     const [isTyping, setIsTyping] = useState(false);
+
+    // Update welcome message when language changes
+    useEffect(() => {
+        setMessages(prev => {
+            if (prev.length === 1 && prev[0].role === 'bot') {
+                return [{ role: 'bot', text: t('chatbot.welcome') }];
+            }
+            return prev;
+        });
+    }, [language, t]);
 
     // Rotation Management
     const keyIndexRef = useRef(0);
@@ -43,7 +56,7 @@ const SigSenseBot = () => {
             const genAI = new GoogleGenerativeAI(currentKey);
             const model = genAI.getGenerativeModel({
                 model: "gemini-2.5-flash",
-                systemInstruction: SYSTEM_PROMPT
+                systemInstruction: getSystemPrompt(language)
             });
 
             chatSessionRef.current = model.startChat({
@@ -60,7 +73,7 @@ const SigSenseBot = () => {
 
     useEffect(() => {
         initChat();
-    }, [initChat]);
+    }, [initChat, language]);
 
     useEffect(() => {
         if (scrollRef.current) {
@@ -126,7 +139,7 @@ const SigSenseBot = () => {
                         const filtered = prev.filter(m => m.text !== ""); // Remove empty streaming bubble
                         return [...filtered, {
                             role: 'bot',
-                            text: `Error: ${errorMessage}. Please try again later.`
+                            text: t('chatbot.error_message').replace("{errorMessage}", errorMessage)
                         }];
                     });
                     setIsTyping(false);
@@ -140,7 +153,7 @@ const SigSenseBot = () => {
     };
 
     const clearChat = () => {
-        setMessages([{ role: 'bot', text: "Chat history cleared." }]);
+        setMessages([{ role: 'bot', text: t('chatbot.clear_history') }]);
         initChat();
         inputRef.current?.focus();
     };
@@ -176,13 +189,13 @@ const SigSenseBot = () => {
                                 </div>
                                 <div className="cursor-default">
                                     <h3 className="font-bold text-base tracking-tight leading-tight">SigSense AI</h3>
-                                    <p className="text-[10px] text-blue-200 font-bold uppercase tracking-widest opacity-90">Traffic Assistant</p>
+                                    <p className="text-[10px] text-blue-200 font-bold uppercase tracking-widest opacity-90">{t('chatbot.assistant_title')}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-1">
                                 <button
                                     onClick={clearChat}
-                                    title="Clear Chat"
+                                    title={t('chatbot.clear_chat_tooltip')}
                                     className="hover:bg-white/10 p-2 rounded-xl transition-all active:scale-90 text-blue-200 hover:text-white cursor-pointer"
                                 >
                                     <TrashIcon />
@@ -241,7 +254,7 @@ const SigSenseBot = () => {
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                                placeholder="Ask about traffic safety..."
+                                placeholder={t('chatbot.placeholder')}
                                 className="flex-1 bg-slate-100 border-transparent border focus:border-blue-500/30 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500/20 outline-none transition-all placeholder:text-slate-400 text-slate-800"
                                 disabled={isTyping}
                             />

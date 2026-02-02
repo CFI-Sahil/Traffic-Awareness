@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 const TrafficLightGuide = () => {
+    const { t } = useLanguage();
     const [activeLight, setActiveLight] = useState('red');
     const [isPaused, setIsPaused] = useState(false);
     const intervalRef = useRef(null);
@@ -28,11 +30,11 @@ const TrafficLightGuide = () => {
 
     const content = {
         red: {
-            title: "Don't Move",
-            badge: "Wait!",
-            dos: ["Stop your vehicle behind the line", "Switch off engine if wait is long"],
-            donts: ["Don't cross the stop line", "Don't honk unnecessarily"],
-            message: "Jumping a red light is a major offense.",
+            title: t('light_guide.red_title'),
+            badge: t('light_guide.red_badge'),
+            dos: (t('light_guide.red_dos') || []),
+            donts: (t('light_guide.red_donts') || []),
+            message: t('light_guide.red_message'),
             icon: <div className="w-12 h-12 rounded-full bg-red-600 shadow-[0_0_20px_rgba(220,38,38,0.5)]"></div>,
             applies: ["Car", "Bike", "Bus"],
             bg: "bg-red-50",
@@ -41,11 +43,11 @@ const TrafficLightGuide = () => {
             badgeBg: "bg-red-100 text-red-800"
         },
         yellow: {
-            title: "Get Ready",
-            badge: "Slow!",
-            dos: ["Slow down your vehicle safely", "Stop if you haven't reached the line"],
-            donts: ["Don't speed up to beat the light", "Don't panic brake"],
-            message: "Yellow means caution, not 'speed up'.",
+            title: t('light_guide.yellow_title'),
+            badge: t('light_guide.yellow_badge'),
+            dos: (t('light_guide.yellow_dos') || []),
+            donts: (t('light_guide.yellow_donts') || []),
+            message: t('light_guide.yellow_message'),
             icon: <div className="w-12 h-12 rounded-full bg-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.5)]"></div>,
             applies: ["Car", "Bike", "Bus"],
             bg: "bg-yellow-50",
@@ -54,11 +56,11 @@ const TrafficLightGuide = () => {
             badgeBg: "bg-yellow-100 text-yellow-800"
         },
         green: {
-            title: "You Can Go",
-            badge: "Go!",
-            dos: ["Proceed with caution", "Look both ways for pedestrians"],
-            donts: ["Don't stay stationary if green", "Don't rush blindly"],
-            message: "Green means go, but safety comes first.",
+            title: t('light_guide.green_title'),
+            badge: t('light_guide.green_badge'),
+            dos: (t('light_guide.green_dos') || []),
+            donts: (t('light_guide.green_donts') || []),
+            message: t('light_guide.green_message'),
             icon: <div className="w-12 h-12 rounded-full bg-green-500 shadow-[0_0_20px_rgba(34,197,94,0.5)]"></div>,
             applies: ["Car", "Bike", "Bus"],
             bg: "bg-green-50",
@@ -126,7 +128,7 @@ const TrafficLightGuide = () => {
                                     <div className="bg-white/60 p-5 rounded-2xl border border-white/50 backdrop-blur-sm shadow-sm">
                                         <h4 className="flex items-center text-green-700 font-bold mb-3">
                                             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                            DO
+                                            {t('light_guide.do')}
                                         </h4>
                                         <ul className="space-y-2">
                                             {(Array.isArray(content[activeLight].dos) ? content[activeLight].dos : []).map((item, idx) => (
@@ -140,7 +142,7 @@ const TrafficLightGuide = () => {
                                     <div className="bg-white/60 p-5 rounded-2xl border border-white/50 backdrop-blur-sm shadow-sm">
                                         <h4 className="flex items-center text-red-600 font-bold mb-3">
                                             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                                            DON'T
+                                            {t('light_guide.dont')}
                                         </h4>
                                         <ul className="space-y-2">
                                             {(Array.isArray(content[activeLight].donts) ? content[activeLight].donts : []).map((item, idx) => (
@@ -155,7 +157,7 @@ const TrafficLightGuide = () => {
 
                                 {/* Applies To */}
                                 <div className="mt-6 flex items-center space-x-4 text-gray-500 text-sm font-semibold">
-                                    <span className="uppercase tracking-wider text-xs bg-white/50 px-2 py-1 rounded">Applies To</span>
+                                    <span className="uppercase tracking-wider text-xs bg-white/50 px-2 py-1 rounded">{t('light_guide.applies_to')}</span>
                                     <div className="flex space-x-3 text-lg opacity-80">
                                         <span title="Car">🚗</span>
                                         <span title="Bike">🏍️</span>
@@ -188,7 +190,7 @@ const TrafficLightGuide = () => {
                 <div className="w-full mt-4">
                     <hr className="border-t border-black/10 mb-6" />
                     <div className={`py-3 px-8 text-center text-sm font-bold tracking-wide rounded-2xl ${current.badgeBg} border border-black/5`}>
-                        <span className="opacity-90">👮 Safety Note: {current.message}</span>
+                        <span className="opacity-90">👮 {t('light_guide.safety_note')}: {current.message}</span>
                     </div>
                 </div>
             </div>
@@ -206,7 +208,7 @@ const TrafficLightGuide = () => {
                         <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-3">
                                 <span className="text-4xl">{item.icon}</span>
-                                <h3 className={`text-4xl font-black ${item.text}`}>{item.title}</h3>
+                                <h3 className={`text-3xl lg:text-4xl font-black ${item.text}`}>{item.title}</h3>
                             </div>
                             <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${item.badgeBg}`}>
                                 {item.badge}
@@ -218,7 +220,7 @@ const TrafficLightGuide = () => {
                             <div className="bg-white/60 p-4 rounded-xl border border-white/40">
                                 <h4 className="flex items-center text-green-700 text-xs font-bold mb-2 uppercase tracking-wide">
                                     <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                    Dos
+                                    {t('light_guide.do')}
                                 </h4>
                                 <ul className="space-y-1.5">
                                     {item.dos.map((doItem, i) => (
@@ -234,7 +236,7 @@ const TrafficLightGuide = () => {
                             <div className="bg-white/60 p-4 rounded-xl border border-white/40">
                                 <h4 className="flex items-center text-red-600 text-xs font-bold mb-2 uppercase tracking-wide">
                                     <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                                    Don'ts
+                                    {t('light_guide.dont')}
                                 </h4>
                                 <ul className="space-y-1.5">
                                     {item.donts.map((dontItem, i) => (

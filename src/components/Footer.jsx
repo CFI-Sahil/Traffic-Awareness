@@ -1,7 +1,8 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 const Footer = () => {
+    const { t } = useLanguage();
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -39,55 +40,55 @@ const Footer = () => {
             >
                 {/* Column 1: Traffic Awareness */}
                 <motion.div variants={itemVariants} className="lg:col-span-1">
-                    <h3 className="text-white font-bold text-xl mb-6">Traffic Awareness</h3>
+                    <h3 className="text-white font-bold text-xl mb-6">{t('footer.traffic_awareness')}</h3>
                     <ul className="space-y-3 text-sm">
-                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">About Us</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors font-medium text-white cursor-pointer">Our Mission</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">Safety Initiatives</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">Stats & Reports</a></li>
+                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">{t('footer.about_us')}</a></li>
+                        <li><a href="#" className="hover:text-white transition-colors font-medium text-white cursor-pointer">{t('footer.our_mission')}</a></li>
+                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">{t('footer.safety_initiatives')}</a></li>
+                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">{t('footer.stats_reports')}</a></li>
                     </ul>
                     <p className="mt-6 text-xs leading-relaxed text-slate-400 opacity-80">
-                        Promoting safer roads through awareness and responsibility.
+                        {t('footer.promo_text')}
                     </p>
                 </motion.div>
 
                 {/* Column 2: Learn */}
                 <motion.div variants={itemVariants} className="lg:col-span-1">
-                    <h3 className="text-white font-bold text-xl mb-6">Learn</h3>
+                    <h3 className="text-white font-bold text-xl mb-6">{t('footer.learn')}</h3>
                     <ul className="space-y-3 text-sm">
-                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">Traffic Rules</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">Road Signs Guide</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">Pedestrian Safety</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">Safe Driving Tips</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">Stats & Reports</a></li>
+                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">{t('footer.traffic_rules')}</a></li>
+                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">{t('footer.road_signs')}</a></li>
+                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">{t('footer.pedestrian_safety')}</a></li>
+                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">{t('footer.driving_tips')}</a></li>
+                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">{t('footer.stats_reports')}</a></li>
                     </ul>
                 </motion.div>
 
                 {/* Column 3: Help */}
                 <motion.div variants={itemVariants} className="lg:col-span-1">
-                    <h3 className="text-white font-bold text-xl mb-6">Help</h3>
+                    <h3 className="text-white font-bold text-xl mb-6">{t('footer.help')}</h3>
                     <ul className="space-y-3 text-sm">
-                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">FAQs</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">Contact Us</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">Stats & Reports</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">About Us</a></li>
+                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">{t('footer.faqs')}</a></li>
+                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">{t('footer.contact_us')}</a></li>
+                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">{t('footer.stats_reports')}</a></li>
+                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">{t('footer.about_us')}</a></li>
                     </ul>
                 </motion.div>
 
                 {/* Column 4: Resources */}
                 <motion.div variants={itemVariants} className="lg:col-span-1">
-                    <h3 className="text-white font-bold text-xl mb-6">Resources</h3>
+                    <h3 className="text-white font-bold text-xl mb-6">{t('footer.resources')}</h3>
                     <ul className="space-y-3 text-sm">
-                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">Laws & Penalties</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">Stats & Reports</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">About Us</a></li>
+                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">{t('footer.laws_penalties')}</a></li>
+                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">{t('footer.stats_reports')}</a></li>
+                        <li><a href="#" className="hover:text-white transition-colors cursor-pointer">{t('footer.about_us')}</a></li>
                     </ul>
                 </motion.div>
 
                 {/* Column 5: Stay Updated */}
                 <motion.div variants={itemVariants} className="lg:col-span-1">
-                    <h3 className="text-white font-bold text-xl mb-6">Stay Updated</h3>
-                    <p className="mb-4 text-sm text-slate-400">Stay informed with the latest traffic safety updates.</p>
+                    <h3 className="text-white font-bold text-xl mb-6">{t('footer.stay_updated')}</h3>
+                    <p className="mb-4 text-sm text-slate-400">{t('footer.newsletter_desc')}</p>
 
                     <div className="flex space-x-4">
                         {/* Facebook Icon */}
@@ -117,11 +118,11 @@ const Footer = () => {
                 transition={{ duration: 0.8, delay: 0.8, ease: [0.215, 0.61, 0.355, 1] }}
                 className="relative w-[85%] mx-auto flex flex-col md:flex-row justify-between items-center text-xs text-slate-500"
             >
-                <p>© 2026 Road Safety Initiative. All rights reserved.</p>
+                <p>{t('footer.all_rights')}</p>
                 <div className="flex space-x-6 mt-4 md:mt-0">
-                    <a href="#" className="hover:text-white transition-colors cursor-pointer">Privacy Policy</a>
+                    <a href="#" className="hover:text-white transition-colors cursor-pointer">{t('footer.privacy_policy')}</a>
                     <span className="text-slate-700">|</span>
-                    <a href="#" className="hover:text-white transition-colors cursor-pointer">Terms of Service</a>
+                    <a href="#" className="hover:text-white transition-colors cursor-pointer">{t('footer.terms_of_service')}</a>
                 </div>
             </motion.div>
         </footer>

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 import ban2 from '../assets/b1.png';
 import { fetchWeather } from '../services/weatherService';
 const HeroBanner = ({ cityData }) => {
+    const { t } = useLanguage();
     const [weather, setWeather] = useState('Clear'); // 'Clear', 'Rain', 'Fog'
 
     useEffect(() => {
@@ -47,12 +49,12 @@ const HeroBanner = ({ cityData }) => {
                         <div className="flex-1 ml-0 text-center md:text-left">
 
                             <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-white leading-tight font-sans tracking-tight">
-                                YOUR JOURNEY,<span className="text-cyan-400">YOUR SAFETY.</span><br />
-                                DRIVE SMARTER.
+                                {t('hero.title_part1')}<span className="text-cyan-400">{t('hero.title_part2')}</span><br />
+                                {t('hero.title_part3')}
                             </h1>
 
                             <p className="mt-6 text-gray-300 max-w-xl text-sm md:text-base leading-relaxed font-medium">
-                                Real-time traffic monitoring powered by AI. Get live alerts, traffic-rule guidance, and road safety insights to help prevent accidents and ensure safer journeys.
+                                {t('hero.subtitle')}
                             </p>
 
                             <div className="mt-8 flex flex-wrap gap-4 justify-center md:justify-start">
@@ -88,7 +90,7 @@ const HeroBanner = ({ cityData }) => {
                                     }}
                                     className="bg-[#ff5757] hover:bg-[#ff4040] text-white px-8 py-3 rounded-full font-bold transition-all shadow-[0_0_20px_rgba(255,87,87,0.4)] hover:shadow-[0_0_30px_rgba(255,87,87,0.6)] hover:-translate-y-1 cursor-pointer"
                                 >
-                                    Live Alerts
+                                    {t('hero.cta_button')}
                                 </button>
                             </div>
                         </div>

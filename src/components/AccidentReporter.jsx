@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // -- Configuration & API Keys --
@@ -39,6 +40,7 @@ Constraints:
 `;
 
 const AccidentReporter = ({ isOpen, onClose, onSwitchToScan }) => {
+    const { t, language } = useLanguage();
     const [preview, setPreview] = useState(null);
     const [image, setImage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -77,6 +79,8 @@ const AccidentReporter = ({ isOpen, onClose, onSwitchToScan }) => {
         setIsLoading(true);
         setError(null);
 
+        const currentLang = language === 'hi' ? 'Hindi' : 'English';
+
         const attemptAnalysis = async (retryCount = 0) => {
             try {
                 const currentKey = API_KEYS[keyIndexRef.current];
@@ -85,7 +89,7 @@ const AccidentReporter = ({ isOpen, onClose, onSwitchToScan }) => {
                 const base64Data = await convertToBase64(image);
 
                 const analysis = await model.generateContent([
-                    REPORT_PROMPT,
+                    `${REPORT_PROMPT}\n\nCRITICAL: Return all text fields (title, dos, donts, message) in ${currentLang} language.`,
                     {
                         inlineData: {
                             data: base64Data,
@@ -114,7 +118,7 @@ const AccidentReporter = ({ isOpen, onClose, onSwitchToScan }) => {
                     keyIndexRef.current = (keyIndexRef.current + 1) % API_KEYS.length;
                     return attemptAnalysis(retryCount + 1);
                 } else {
-                    setError("Unable to process the report. Please try again with fresh API keys.");
+                    setError("Unable to process the report. Please try again later.");
                     console.error(err);
                 }
             }
@@ -156,8 +160,8 @@ const AccidentReporter = ({ isOpen, onClose, onSwitchToScan }) => {
                                     <AlertIcon />
                                 </div>
                                 <div>
-                                    <h2 className="text-xl font-bold">Accident Reporter</h2>
-                                    <p className="text-xs opacity-80 uppercase tracking-widest font-bold">Emergency Support</p>
+                                    <h2 className="text-xl font-bold">{t('reporter.title')}</h2>
+                                    <p className="text-xs opacity-80 uppercase tracking-widest font-bold">{t('reporter.subtitle')}</p>
                                 </div>
                             </div>
                             <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full cursor-pointer">
@@ -184,7 +188,7 @@ const AccidentReporter = ({ isOpen, onClose, onSwitchToScan }) => {
                                                 <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-red-600 group-hover:scale-110 transition-transform">
                                                     <CameraIcon />
                                                 </div>
-                                                <p className="font-bold text-red-800">Direct Capture</p>
+                                                <p className="font-bold text-red-800">{t('reporter.direct_capture')}</p>
                                                 <input
                                                     ref={cameraInputRef}
                                                     type="file"
@@ -201,7 +205,7 @@ const AccidentReporter = ({ isOpen, onClose, onSwitchToScan }) => {
                                                 <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 group-hover:scale-110 transition-transform">
                                                     <GalleryIcon />
                                                 </div>
-                                                <p className="font-bold text-gray-800">Upload Gallery</p>
+                                                <p className="font-bold text-gray-800">{t('reporter.upload_gallery')}</p>
                                                 <input
                                                     ref={fileInputRef}
                                                     type="file"
@@ -237,7 +241,7 @@ const AccidentReporter = ({ isOpen, onClose, onSwitchToScan }) => {
                                                 }`}
                                         >
                                             {isLoading ? <Spinner className="w-5 h-5 animate-spin" /> : <ReportIcon className="w-5 h-5" />}
-                                            {isLoading ? "Analyzing..." : "Analyze Incident"}
+                                            {isLoading ? t('reporter.analyzing') : t('reporter.analyze_incident')}
                                         </button>
                                     )}
 
@@ -258,7 +262,7 @@ const AccidentReporter = ({ isOpen, onClose, onSwitchToScan }) => {
                                                 <div className="space-y-4">
                                                     <div className="bg-green-50 rounded-2xl p-4 border border-green-100">
                                                         <h4 className="text-green-800 font-bold text-sm uppercase flex items-center gap-2 mb-2">
-                                                            <CheckIcon className="w-4 h-4" /> What to do?
+                                                            <CheckIcon className="w-4 h-4" /> {t('reporter.what_to_do')}
                                                         </h4>
                                                         <ul className="space-y-2">
                                                             {result.dos.map((doItem, i) => (
@@ -270,7 +274,7 @@ const AccidentReporter = ({ isOpen, onClose, onSwitchToScan }) => {
                                                     </div>
                                                     <div className="bg-red-50 rounded-2xl p-4 border border-red-100">
                                                         <h4 className="text-red-800 font-bold text-sm uppercase flex items-center gap-2 mb-2">
-                                                            <XIcon className="w-4 h-4" /> What NOT to do?
+                                                            <CheckIcon className="w-4 h-4" /> {t('reporter.what_not_to_do')}
                                                         </h4>
                                                         <ul className="space-y-2">
                                                             {result.donts.map((dontItem, i) => (
@@ -300,7 +304,7 @@ const AccidentReporter = ({ isOpen, onClose, onSwitchToScan }) => {
                                                 onClick={clear}
                                                 className="mt-4 w-full py-4 bg-white border border-red-500 text-red-600 rounded-2xl hover:bg-gray-50 transition-all font-bold shadow-sm active:scale-[0.98] cursor-pointer"
                                             >
-                                                Start New Report
+                                                {t('reporter.start_new')}
                                             </button>
                                         </motion.div>
                                     )}

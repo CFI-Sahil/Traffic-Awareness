@@ -1,12 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 const SafetyRulesCards = () => {
+    const { t } = useLanguage();
     const rules = [
         {
             id: 1,
-            title: "Emergency Vehicles",
-            description: "Give way to Ambulance, fire brigade, police to save lives.",
+            title: t('safety_rules.emergency_title'),
+            description: t('safety_rules.emergency_desc'),
             icon: (
                 <svg className="w-16 h-16 text-slate-800" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M22,14 L20,14 L20,10.6 C20,9.7 19.3,9 18.4,9 L15,9 L15,5 C15,4.4 14.6,4 14,4 L10,4 C9.4,4 9,4.4 9,5 L9,9 L5.6,9 C4.7,9 4,9.7 4,10.6 L4,17.4 C4,18.3 4.7,19 5.6,19 L7,19 C7,20.7 8.3,22 10,22 C11.7,22 13,20.7 13,19 L15,19 C15,20.7 16.3,22 18,22 C19.7,22 21,20.7 21,19 L22,19 C22.6,19 23,18.6 23,18 L23,15 C23,14.4 22.6,14 22,14 Z M10,20.5 C9.2,20.5 8.5,19.8 8.5,19 C8.5,18.2 9.2,17.5 10,17.5 C10.8,17.5 11.5,18.2 11.5,19 C11.5,19.8 10.8,20.5 10,20.5 Z M12,11.5 L12,14 L14.5,14 L14.5,16 L12,16 L12,18.5 L10,18.5 L10,16 L7.5,16 L7.5,14 L10,14 L10,11.5 L12,11.5 Z M18,20.5 C17.2,20.5 16.5,19.8 16.5,19 C16.5,18.2 17.2,17.5 18,17.5 C18.8,17.5 19.5,18.2 19.5,19 C19.5,19.8 18.8,20.5 18,20.5 Z M21,15 L21,17 L19,17 L19,11 L19,11 L18.4,11 L15,11 L15,17 L13,17 C13,15.6 11.7,14.3 10,14.1 L10,14.1 L10,11 L19,11 L21,15 Z" />
@@ -15,8 +17,8 @@ const SafetyRulesCards = () => {
         },
         {
             id: 2,
-            title: "Drive on Left",
-            description: "Ensures uniform flow and reduces accidents on Indian roads.",
+            title: t('safety_rules.drive_left_title'),
+            description: t('safety_rules.drive_left_desc'),
             icon: (
                 <svg className="w-16 h-16 text-slate-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M7 3v18M7 3l-3 3m3-3 3 3M17 21V3M17 21l-3-3m3 3 3-3" />
@@ -25,8 +27,8 @@ const SafetyRulesCards = () => {
         },
         {
             id: 3,
-            title: "No Wrong Overtake",
-            description: "Do not overtake from the wrong side, especially near curves.",
+            title: t('safety_rules.no_wrong_overtake_title'),
+            description: t('safety_rules.no_wrong_overtake_desc'),
             icon: (
                 <div className="relative">
                     <svg className="w-16 h-16 text-slate-800 opacity-20" viewBox="0 0 24 24" fill="currentColor">
@@ -42,8 +44,8 @@ const SafetyRulesCards = () => {
         },
         {
             id: 4,
-            title: "Safety Gear",
-            description: "Helmet for two-wheelers and seat belts for car passengers.",
+            title: t('safety_rules.safety_gear_title'),
+            description: t('safety_rules.safety_gear_desc'),
             icon: (
                 <svg className="w-16 h-16 text-slate-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />

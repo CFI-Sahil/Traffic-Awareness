@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -93,6 +94,7 @@ const CustomSelect = ({ value, onChange, options, label, placeholder, disabled }
 };
 
 const InteractiveMapSection = () => {
+    const { t, language } = useLanguage();
     const [userLocation, setUserLocation] = useState(null);
     const [locationError, setLocationError] = useState(null);
     const [loadingLocation, setLoadingLocation] = useState(false);
@@ -207,22 +209,22 @@ const InteractiveMapSection = () => {
             {
                 positions: [[center[0], center[1]], [center[0] + 0.01, center[1] + 0.01]],
                 color: 'green',
-                status: 'Clear Road (Near You)'
+                status: t('dashboard.smooth') + ' (Near You)'
             },
             {
                 positions: [[center[0], center[1]], [center[0] - 0.01, center[1] - 0.01]],
                 color: 'red',
-                status: 'Heavy Traffic (Near You)'
+                status: t('dashboard.heavy') + ' (Near You)'
             },
             {
                 positions: [[center[0] + 0.01, center[1] + 0.01], [center[0] + 0.02, center[1] + 0.02]],
                 color: 'green',
-                status: 'Clear Road'
+                status: t('dashboard.smooth')
             },
             {
                 positions: [[center[0] - 0.01, center[1] - 0.01], [center[0] - 0.02, center[1] - 0.02]],
                 color: 'orange',
-                status: 'Moderate Traffic'
+                status: t('dashboard.moderate')
             },
         ];
         setTrafficRoutes(mockRoutes);
@@ -376,21 +378,21 @@ const InteractiveMapSection = () => {
     };
     const handleMapRedirect = () => {
         if (!userLocation) {
-            setToastMessage("detect location first");
+            setToastMessage(language === 'hi' ? "पहले स्थान का पता लगाएं" : "detect location first");
             setShowToast(true);
             setTimeout(() => setShowToast(false), 4000);
             return;
         }
 
         if (!startPoint || !endPoint) {
-            setToastMessage("select start & End points");
+            setToastMessage(language === 'hi' ? "शुरुआत और गंतव्य बिंदु चुनें" : "select start & End points");
             setShowToast(true);
             setTimeout(() => setShowToast(false), 4000);
             return;
         }
 
         if (startPoint === endPoint) {
-            setToastMessage("points cannot be same");
+            setToastMessage(language === 'hi' ? "बिंदु समान नहीं हो सकते" : "points cannot be same");
             setShowToast(true);
             setTimeout(() => setShowToast(false), 4000);
             return;
@@ -448,7 +450,7 @@ const InteractiveMapSection = () => {
                     <div className="bg-gradient-to-r from-[#0d181c] via-[#1f353d] to-[#0d181c] p-3 text-white flex justify-between items-center z-10">
                         <div className="flex items-center gap-2">
                             <span className="text-2xl">📍</span>
-                            <h3 className="font-bold text-lg tracking-wide">LIVE TRACER</h3>
+                            <h3 className="font-bold text-lg tracking-wide">{t('map_section.tracer_title')}</h3>
                         </div>
                         <button
                             onClick={handleDetectLocation}
@@ -461,10 +463,10 @@ const InteractiveMapSection = () => {
                                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                     </svg>
-                                    Detect...
+                                    {t('map_section.detecting')}
                                 </>
                             ) : (
-                                "Detect"
+                                t('map_section.detect_button')
                             )}
                         </button>
                     </div>
@@ -499,7 +501,7 @@ const InteractiveMapSection = () => {
                         {!userLocation && !loadingLocation && (
                             <div className="absolute inset-0 pointer-events-none flex items-center justify-center bg-black/5 z-[400]">
                                 <div className="bg-white/90 backdrop-blur-sm p-4 rounded-xl shadow-lg text-center max-w-[80%] border border-white/50">
-                                    <p className="text-gray-600 font-medium text-sm">Click "Detect" to start</p>
+                                    <p className="text-gray-600 font-medium text-sm">{t('map_section.click_to_start') || 'Click "Detect" to start'}</p>
                                 </div>
                             </div>
                         )}
@@ -515,7 +517,7 @@ const InteractiveMapSection = () => {
                         <div className="flex items-center gap-2">
                             <span className="text-2xl">🛣️</span>
                             <h3 className="font-bold text-sm md:text-lg tracking-wide">
-                                {isFetchingPlaces ? "LOCATING..." : `AREAS IN YOUR CITY`}
+                                {isFetchingPlaces ? (t('map_section.detecting_upper') || "LOCATING...") : t('map_section.areas_title')}
                             </h3>
                         </div>
                         <div className="bg-white/20 px-3 py-1 rounded-lg text-xs font-bold backdrop-blur-md">
@@ -542,8 +544,8 @@ const InteractiveMapSection = () => {
 
                         {/* Start Point */}
                         <CustomSelect
-                            label="Start Point"
-                            placeholder="Select Start Point"
+                            label={t('map_section.start_point')}
+                            placeholder={t('map_section.start_point')}
                             value={startPoint}
                             onChange={(e) => setStartPoint(e.target.value)}
                             options={availablePlaces}
@@ -551,8 +553,8 @@ const InteractiveMapSection = () => {
 
                         {/* End Point */}
                         <CustomSelect
-                            label="Destination"
-                            placeholder="Select Destination Point"
+                            label={t('map_section.destination')}
+                            placeholder={t('map_section.destination')}
                             value={endPoint}
                             onChange={(e) => setEndPoint(e.target.value)}
                             options={availablePlaces}
@@ -570,11 +572,11 @@ const InteractiveMapSection = () => {
                                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                     </svg>
-                                    CHARTING...
+                                    {t('map_section.checking')}
                                 </>
                             ) : (
                                 <>
-                                    <span>CHECK TRAFFIC STATUS</span>
+                                    <span>{t('map_section.check_button')}</span>
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                     </svg>
@@ -601,7 +603,11 @@ const InteractiveMapSection = () => {
                                             <span className="text-xl">
                                                 {routeResult.status === 'Clear' ? "✅" : routeResult.status === 'Moderate' ? "⚠️" : "🚨"}
                                             </span>
-                                            <h4 className="font-black tracking-tighter uppercase text-sm">{routeResult.status} TRAFFIC AHEAD</h4>
+                                            <h4 className="font-black tracking-tighter uppercase text-sm">
+                                                {routeResult.status === 'Clear' ? t('map_section.clear_traffic') :
+                                                    routeResult.status === 'Moderate' ? t('map_section.moderate_traffic') :
+                                                        t('map_section.heavy_traffic')} {t('map_section.traffic_status')}
+                                            </h4>
                                         </div>
                                         <button onClick={() => setRouteResult(null)} className="hover:rotate-90 transition-transform cursor-pointer">
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -610,7 +616,7 @@ const InteractiveMapSection = () => {
 
                                     <div className="p-5 grid grid-cols-2 gap-4">
                                         <div className="bg-white/60 backdrop-blur-sm p-4 rounded-2xl border border-white/50 shadow-sm flex flex-col items-center text-center">
-                                            <span className="text-gray-400 text-[10px] font-black uppercase tracking-widest mb-1">Time to Travel</span>
+                                            <span className="text-gray-400 text-[10px] font-black uppercase tracking-widest mb-1">{t('map_section.time_to_travel_short')}</span>
                                             <div className="flex items-center gap-2 text-gray-800">
                                                 <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                                 <span className="text-base md:text-lg font-black">{routeResult.time}</span>
@@ -618,7 +624,7 @@ const InteractiveMapSection = () => {
                                         </div>
 
                                         <div className="bg-white/60 backdrop-blur-sm p-4 rounded-2xl border border-white/50 shadow-sm flex flex-col items-center text-center">
-                                            <span className="text-gray-400 text-[10px] font-black uppercase tracking-widest mb-1">Total Distance</span>
+                                            <span className="text-gray-400 text-[10px] font-black uppercase tracking-widest mb-1">{t('map_section.total_distance_short')}</span>
                                             <div className="flex items-center gap-2 text-gray-800">
                                                 <svg className="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                                                 <span className="text-lg font-black">{routeResult.distance}</span>
@@ -627,11 +633,11 @@ const InteractiveMapSection = () => {
 
                                         <div className="col-span-2 bg-white/80 backdrop-blur-sm p-4 rounded-2xl border border-white shadow-sm flex items-center justify-between">
                                             <div className="flex flex-col">
-                                                <span className="text-gray-400 text-[10px] font-black uppercase tracking-widest">Route Analysis</span>
+                                                <span className="text-gray-400 text-[10px] font-black uppercase tracking-widest">{t('map_section.route_analysis')}</span>
                                                 <p className="text-xs font-bold text-gray-700 mt-0.5 italic">
-                                                    {routeResult.status === 'Clear' ? "The road is smooth. Safe travels!" :
-                                                        routeResult.status === 'Moderate' ? "Expect minor delays. Drive safely." :
-                                                            "Heavy traffic ahead. Use another route if possible."}
+                                                    {routeResult.status === 'Clear' ? t('map_section.safe_travels') :
+                                                        routeResult.status === 'Moderate' ? t('map_section.minor_delays') :
+                                                            t('map_section.heavy_delays')}
                                                 </p>
                                             </div>
                                             <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group relative cursor-pointer hover:bg-slate-200 transition-colors">
@@ -656,8 +662,8 @@ const InteractiveMapSection = () => {
                         <div className="flex items-center gap-1">
                             <span className="text-2xl">🚦</span>
                             <div>
-                                <h3 className="font-bold text-sm md:text-lg tracking-wide">TRAFFIC MAP</h3>
-                                <p className="text-xs text-green-100 font-medium opacity-90">Real-time Updates</p>
+                                <h3 className="font-bold text-sm md:text-lg tracking-wide">{t('map_section.map_title')}</h3>
+                                <p className="text-xs text-green-100 font-medium opacity-90">{t('map_section.real_time')}</p>
                             </div>
                         </div>
                         <div className="flex gap-3 text-[10px] md:text-xs font-black bg-white/20 px-3 py-1.5 rounded-lg backdrop-blur-sm uppercase tracking-tighter">
@@ -665,7 +671,7 @@ const InteractiveMapSection = () => {
                                 {/* <svg className="w-3 h-3 animate-pulse text-green-400" fill="currentColor" viewBox="0 0 20 20">
                                     <circle cx="10" cy="10" r="10" />
                                 </svg> */}
-                                Click to see route
+                                {t('map_section.click_to_navigate')}
                             </span>
                         </div>
                     </div>
@@ -723,7 +729,7 @@ const InteractiveMapSection = () => {
                         {/* Interactive Overlay to tell user it's clickable */}
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 flex items-center justify-center transition-all z-[450]">
                             <div className="bg-white/95 px-6 py-2.5 rounded-full shadow-2xl opacity-0 group-hover:opacity-100 transition-all transform translate-y-4 group-hover:translate-y-0 flex items-center gap-2 border border-gray-100">
-                                <span className="text-sm font-black text-[#0d181c] uppercase tracking-tighter">Click to Navigate</span>
+                                <span className="text-sm font-black text-[#0d181c] uppercase tracking-tighter">{t('map_section.click_to_navigate')}</span>
                                 <svg className="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                 </svg>

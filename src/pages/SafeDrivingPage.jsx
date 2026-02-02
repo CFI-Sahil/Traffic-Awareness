@@ -1,17 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
+
 const SafeDrivingPage = () => {
+    const { t } = useLanguage();
     const containerRef = useRef(null);
     const canvasRef = useRef(null);
     const [images, setImages] = useState([]);
     const [loaded, setLoaded] = useState(false);
     const [progress, setProgress] = useState(0);
 
-    // Load  100 images
+    // Load  120 images
     useEffect(() => {
         window.scrollTo(0, 0);
         const fetchImages = async () => {
-            const imagePaths = Array.from({ length: 100 }, (_, i) => {
+            const imagePaths = Array.from({ length: 120 }, (_, i) => {
                 const frameNum = String(i + 1).padStart(3, '0');
                 // Use new URL for assets in Vite to ensure they are handled correctly
                 return new URL(`../assets/new bike/ezgif-frame-${frameNum}.jpg`, import.meta.url).href;
@@ -57,7 +60,7 @@ const SafeDrivingPage = () => {
     }, [scrollYProgress]);
 
     // Map scroll progress to frame index
-    const frameIndex = useTransform(scrollYProgress, [0, 1], [0, 99]);
+    const frameIndex = useTransform(scrollYProgress, [0, 1], [0, 119]);
 
     // Opacity for side text - stays visible until the end
     const sideTextOpacity = useTransform(scrollYProgress, [0.97, 0.99], [1, 0]);
@@ -128,10 +131,10 @@ const SafeDrivingPage = () => {
     }, [loaded, images, smoothFrameIndex]);
 
     const textSequences = [
-        { start: 0, end: 0.2, text: "The Speed Blur", sub: "Control is the essence of survival" },
-        { start: 0.3, end: 0.5, text: "Navigating Chaos", sub: "India's roads demand absolute focus" },
-        { start: 0.6, end: 0.8, text: "Steady Progress", sub: "Rhythm and patience define the journey" },
-        { start: 0.9, end: 1.0, text: "Arrive Safely", sub: "Every mile is a commitment to life" }
+        { start: 0, end: 0.2, text: t('safe_driving.seq1_text'), sub: t('safe_driving.seq1_sub') },
+        { start: 0.3, end: 0.5, text: t('safe_driving.seq2_text'), sub: t('safe_driving.seq2_sub') },
+        { start: 0.6, end: 0.8, text: t('safe_driving.seq3_text'), sub: t('safe_driving.seq3_sub') },
+        { start: 0.9, end: 1.0, text: t('safe_driving.seq4_text'), sub: t('safe_driving.seq4_sub') }
     ];
 
     return (
@@ -148,7 +151,7 @@ const SafeDrivingPage = () => {
                             />
                         </div>
                         <p className="mt-6 font-black tracking-[0.3em] text-[10px] opacity-70 uppercase animate-pulse">
-                            Preparing Experience...
+                            {t('safe_driving.loading_msg')}
                         </p>
                     </div>
                 )}
@@ -209,7 +212,7 @@ const SafeDrivingPage = () => {
                     style={{ opacity: useTransform(scrollYProgress, [0.95, 0.98], [1, 0]) }}
                     className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center"
                 >
-                    <span className="text-[9px] font-black text-white/60 tracking-[0.5em] mb-4 uppercase">Scroll Down</span>
+                    <span className="text-[9px] font-black text-white/60 tracking-[0.5em] mb-4 uppercase">{t('safe_driving.scroll_down')}</span>
                     <div className="w-1 h-12 bg-white/10 rounded-full relative overflow-hidden">
                         <motion.div
                             className="absolute top-0 left-0 w-full bg-red-500 rounded-full"
@@ -230,9 +233,9 @@ const SafeDrivingPage = () => {
                             transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
                             className="absolute top-[55%] -translate-y-1/2 left-12 z-30 hidden lg:block border-l-2 border-red-500 pl-6 h-32 flex flex-col justify-center"
                         >
-                            <p className="text-white font-black text-base tracking-widest uppercase mb-2">Technical Insight</p>
+                            <p className="text-white font-black text-base tracking-widest uppercase mb-2">{t('safe_driving.tech_insight')}</p>
                             <p className="text-red-500 text-lg max-w-[250px] font-medium leading-relaxed">
-                                Visualizing the dynamics of Indian traffic.
+                                {t('safe_driving.tech_desc')}
                             </p>
                         </motion.div>
                     )}
@@ -257,18 +260,19 @@ const SafeDrivingPage = () => {
 };
 
 const TrafficFineCalculator = () => {
+    const { t } = useLanguage();
     const [vehicle, setVehicle] = useState('Bike');
     const [violation, setViolation] = useState('');
     const [fine, setFine] = useState(null);
 
     const violations = [
-        { id: 'helmet', label: "No Helmet", amount: 1000, vehicles: ['Bike'] },
-        { id: 'seatbelt', label: "No Seatbelt", amount: 1000, vehicles: ['Car'] },
-        { id: 'speeding', label: "Over-speeding", amount: 2000, vehicles: ['Bike', 'Car'] },
-        { id: 'redlight', label: "Red Light Jump", amount: 5000, vehicles: ['Bike', 'Car'] },
-        { id: 'drunk', label: "Drunk Driving", amount: 10000, vehicles: ['Bike', 'Car'] },
-        { id: 'license', label: "No Driving License", amount: 5000, vehicles: ['Bike', 'Car'] },
-        { id: 'insurance', label: "Expired Insurance", amount: 2000, vehicles: ['Bike', 'Car'] }
+        { id: 'helmet', label: t('fine_calculator.violation_helmet'), amount: 1000, vehicles: ['Bike'] },
+        { id: 'seatbelt', label: t('fine_calculator.violation_seatbelt'), amount: 1000, vehicles: ['Car'] },
+        { id: 'speeding', label: t('fine_calculator.violation_speeding'), amount: 2000, vehicles: ['Bike', 'Car'] },
+        { id: 'redlight', label: t('fine_calculator.violation_redlight'), amount: 5000, vehicles: ['Bike', 'Car'] },
+        { id: 'drunk', label: t('fine_calculator.violation_drunk'), amount: 10000, vehicles: ['Bike', 'Car'] },
+        { id: 'license', label: t('fine_calculator.violation_license'), amount: 5000, vehicles: ['Bike', 'Car'] },
+        { id: 'insurance', label: t('fine_calculator.violation_insurance'), amount: 2000, vehicles: ['Bike', 'Car'] }
     ];
 
     const filteredViolations = violations.filter(v => v.vehicles.includes(vehicle));
@@ -296,9 +300,9 @@ const TrafficFineCalculator = () => {
                         </svg>
                     </div>
                     <h2 className="text-xl md:text-2xl font-[900] text-gray-800 tracking-tight uppercase leading-none text-center">
-                        Traffic Fine Calculator
+                        {t('fine_calculator.title')}
                     </h2>
-                    <p className="text-gray-400 text-[9px] md:text-[10px] font-bold tracking-[0.2em] mt-2 md:mt-3 uppercase text-center">Updated Penalties 2026</p>
+                    <p className="text-gray-400 text-[9px] md:text-[10px] font-bold tracking-[0.2em] mt-2 md:mt-3 uppercase text-center">{t('fine_calculator.subtitle')}</p>
                 </div>
 
                 {/* Vehicle Selector */}
@@ -317,14 +321,14 @@ const TrafficFineCalculator = () => {
                                 }`}
                         >
                             <span>{type === 'Bike' ? '🏍️' : '🚗'}</span>
-                            {type === 'Bike' ? 'Bike' : 'Car'}
+                            {type === 'Bike' ? t('fine_calculator.bike') : t('fine_calculator.car')}
                         </button>
                     ))}
                 </div>
 
                 {/* Violation Selection - Scrollable Area */}
                 <div className="flex-1 overflow-hidden flex flex-col mb-4 md:mb-6">
-                    <label className="text-[9px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2 block pl-2">Select Violation</label>
+                    <label className="text-[9px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2 block pl-2">{t('fine_calculator.select_violation')}</label>
                     <div className="flex-1 overflow-y-auto pr-1 space-y-2 custom-scrollbar">
                         {(Array.isArray(filteredViolations) ? filteredViolations : []).map((v) => (
                             <button
@@ -360,7 +364,7 @@ const TrafficFineCalculator = () => {
                                 exit={{ opacity: 0, y: -10 }}
                                 className="bg-gray-50 border border-gray-100 rounded-2xl p-4 md:p-5 text-center"
                             >
-                                <p className="text-[8px] md:text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1">Estimated Fine</p>
+                                <p className="text-[8px] md:text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1">{t('fine_calculator.est_fine')}</p>
                                 <p className="text-2xl md:text-3xl font-black text-gray-800 tracking-tighter">
                                     <span className="text-red-600 mr-2 text-xl md:text-2xl">₹</span>
                                     {fine.toLocaleString()}
@@ -373,13 +377,13 @@ const TrafficFineCalculator = () => {
                                 disabled={!violation}
                                 className="w-full bg-[#0d181c] hover:bg-[#060E10] disabled:bg-gray-200 disabled:text-gray-400 text-white font-black py-4 md:py-4.5 rounded-2xl shadow-xl transition-all active:scale-[0.98] tracking-widest uppercase text-[10px] md:text-xs cursor-pointer"
                             >
-                                Calculate Fine
+                                {t('fine_calculator.calculate_btn')}
                             </button>
                         )}
                     </AnimatePresence>
 
                     <p className="text-[8px] text-gray-400 font-bold uppercase tracking-widest text-center leading-relaxed">
-                        Based on Motor Vehicles (Amendment) Act 2026
+                        {t('fine_calculator.act_desc')}
                     </p>
                 </div>
             </motion.div>

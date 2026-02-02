@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 import { useQuery } from '@tanstack/react-query';
 import { fetchTrafficStats } from '../services/trafficService';
 import AccidentCard from './AccidentCard';
@@ -7,6 +8,7 @@ import CongestionCard from './CongestionCard';
 import TrafficTrendChart from './TrafficTrendChart';
 
 const TrafficDashboard = ({ cityData }) => {
+    const { t } = useLanguage();
     // Poll every 30 seconds
     const { data, isLoading, isError } = useQuery({
         queryKey: ['trafficStats', cityData.name],
@@ -14,8 +16,8 @@ const TrafficDashboard = ({ cityData }) => {
         refetchInterval: 30000,
     });
 
-    if (isLoading) return <div className="text-center py-10 text-gray-500">Live traffic data loading...</div>;
-    if (isError) return <div className="text-center py-10 text-red-500">Error connecting to traffic servers.</div>;
+    if (isLoading) return <div className="text-center py-10 text-gray-500">{t('dashboard.loading')}</div>;
+    if (isError) return <div className="text-center py-10 text-red-500">{t('dashboard.error')}</div>;
 
     return (
         <div className="flex flex-col space-y-8 w-full">

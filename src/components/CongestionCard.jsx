@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 const CongestionCard = ({ data }) => {
+    const { t } = useLanguage();
     const { congestionLevel, trend } = data || { congestionLevel: 0, trend: '+0%' };
 
     // Determine color based on level
@@ -36,7 +38,7 @@ const CongestionCard = ({ data }) => {
             {/* Header */}
             <div className="text-center z-10 w-full flex justify-between items-start">
                 <div className="text-left">
-                    <h3 className="text-sm font-bold text-gray-400">Congestion Level</h3>
+                    <h3 className="text-sm font-bold text-gray-400">{t('dashboard.congestion_level')}</h3>
                     <div className="flex items-baseline mt-1 space-x-2">
                         <span className="text-3xl font-bold text-white transition-colors duration-500" style={{ color: color }}>
                             {congestionLevel}%
@@ -104,20 +106,20 @@ const CongestionCard = ({ data }) => {
                 </svg>
 
                 <div className="absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-                    <p className="text-gray-400 text-xs tracking-widest uppercase">Status</p>
+                    <p className="text-gray-400 text-xs tracking-widest uppercase">{t('dashboard.status')}</p>
                     <p className="text-white font-bold text-lg mt-1 tracking-wide" style={{ color: color }}>
-                        {congestionLevel < 30 ? 'Smooth' : congestionLevel < 60 ? 'Moderate' : 'Heavy'}
+                        {congestionLevel < 30 ? t('dashboard.smooth') : congestionLevel < 60 ? t('dashboard.moderate') : t('dashboard.heavy')}
                     </p>
                 </div>
             </div>
 
             <div className="w-full grid grid-cols-2 gap-4 mt-6 z-10">
                 <div className="bg-white/5 rounded-lg p-3 text-center border border-white/5">
-                    <p className="text-[10px] text-gray-500 uppercase">Avg Speed</p>
+                    <p className="text-[10px] text-gray-500 uppercase">{t('dashboard.avg_speed')}</p>
                     <p className="text-xl font-bold text-white">42 <span className="text-xs font-normal text-gray-400">km/h</span></p>
                 </div>
                 <div className="bg-white/5 rounded-lg p-3 text-center border border-white/5">
-                    <p className="text-[10px] text-gray-500 uppercase">Free Flow</p>
+                    <p className="text-[10px] text-gray-500 uppercase">{t('dashboard.free_flow')}</p>
                     <p className="text-xl font-bold text-gray-300">65 <span className="text-xs font-normal text-gray-500">km/h</span></p>
                 </div>
             </div>

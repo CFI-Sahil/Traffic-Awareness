@@ -1,38 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 import ban1 from '../assets/ban1.png';
 import ban2 from '../assets/ban2.png';
 import ban3 from '../assets/ban3.png';
 import logo from '../assets/logo.png';
 
-const slides = [
-    {
-        id: 1,
-        image: ban1,
-        title: "BUCKLE UP",
-        subtitle: "Seatbelts save lives",
-        color: "bg-blue-600",
-        icon: "🛡️"
-    },
-    {
-        id: 2,
-        image: ban2,
-        title: "WEAR HELMET",
-        subtitle: "Protect your head",
-        color: "bg-orange-500",
-        icon: "⛑️"
-    },
-    {
-        id: 3,
-        image: ban3,
-        title: "STAY ALERT",
-        subtitle: "Eyes on the road",
-        color: "bg-red-600",
-        icon: "👀"
-    }
-];
-
 const SafetyCarousel = () => {
+    const { t } = useLanguage();
+    const slides = [
+        {
+            id: 1,
+            image: ban1,
+            title: t('safety_carousel.buckle_up_title'),
+            subtitle: t('safety_carousel.buckle_up_sub'),
+            color: "bg-blue-600",
+            icon: "🛡️"
+        },
+        {
+            id: 2,
+            image: ban2,
+            title: t('safety_carousel.helmet_title'),
+            subtitle: t('safety_carousel.helmet_sub'),
+            color: "bg-orange-500",
+            icon: "⛑️"
+        },
+        {
+            id: 3,
+            image: ban3,
+            title: t('safety_carousel.stay_alert_title'),
+            subtitle: t('safety_carousel.stay_alert_sub'),
+            color: "bg-red-600",
+            icon: "👀"
+        }
+    ];
+
     const [currentIndex, setCurrentIndex] = useState(0);
 
     // Auto-advance
@@ -41,7 +43,7 @@ const SafetyCarousel = () => {
             setCurrentIndex((prev) => (prev + 1) % slides.length);
         }, 5000);
         return () => clearInterval(timer);
-    }, []);
+    }, [slides.length]);
 
     const slide = slides[currentIndex];
 
@@ -59,7 +61,7 @@ const SafetyCarousel = () => {
                     <img src={logo} alt="Safe Roads India" className="h-full w-auto object-contain invert-0 brightness-600" />
                 </div>
                 <div className="h-10 md:h-14 bg-green-300 p-3 md:p-6 px-3 xl:px-10 rounded-r-full shadow-md flex items-center">
-                    <h2 className="text-[14px] sm:text-lg md:text-xl font-bold text-gray-700 tracking-wide uppercase whitespace-nowrap">Safety Reminders</h2>
+                    <h2 className="text-[14px] sm:text-lg md:text-xl font-bold text-gray-700 tracking-wide uppercase whitespace-nowrap">{t('home.safety_reminders')}</h2>
                 </div>
             </motion.div>
 

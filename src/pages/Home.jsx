@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 import HeroBanner from '../components/HeroBanner';
 import TrafficDashboard from '../components/TrafficDashboard';
 import TrafficLightGuide from '../components/TrafficLightGuide';
@@ -12,6 +13,7 @@ import TrafficRulesCards from '../components/TrafficRulesCards';
 import { CityConfig } from '../config/cityConfig';
 
 const Home = ({ currentCity }) => {
+    const { t } = useLanguage();
     const cityData = CityConfig[currentCity];
 
     useEffect(() => {
@@ -45,7 +47,9 @@ const Home = ({ currentCity }) => {
 
             {/* Dashboard Section */}
             <section id="traffic-insights" className="w-[90%] mx-auto my-10">
-                <h2 className="text-2xl font-bold text-gray-800 mb-6 px-2 border-l-4 border-red-500">Traffic Insights for {cityData.name}</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6 px-2 border-l-4 border-red-500">
+                    {t('home.traffic_insights')} {t('cities.' + currentCity)}
+                </h2>
                 <TrafficDashboard cityData={cityData} />
             </section>
 
@@ -53,8 +57,8 @@ const Home = ({ currentCity }) => {
             <section className="w-[90%] mx-auto my-14">
                 <div className="flex justify-between items-start mb-8 px-2">
                     <div>
-                        <h2 className="text-xl lg:text-2xl font-bold text-gray-800 border-l-4 border-red-500 pl-2 lg:pl-3">Essential Traffic Rules</h2>
-                        <p className="text-gray-500 text-xs lg:text-sm mt-1 pl-3 lg:pl-4">Fundamental guidelines for every responsible citizen.</p>
+                        <h2 className="text-xl lg:text-2xl font-bold text-gray-800 border-l-4 border-red-500 pl-2 lg:pl-3">{t('home.essential_rules')}</h2>
+                        <p className="text-gray-500 text-xs lg:text-sm mt-1 pl-3 lg:pl-4">{t('home.essential_subtitle')}</p>
                     </div>
                 </div>
                 <TrafficRulesCards />
@@ -64,11 +68,11 @@ const Home = ({ currentCity }) => {
             <section className="w-[90%] mx-auto my-14">
                 <div className="flex justify-between items-start mb-8 px-2">
                     <div>
-                        <h2 className="text-xl lg:text-2xl font-bold text-gray-800 border-l-4 border-red-500 pl-2 lg:pl-3">Advanced Safety Methods</h2>
-                        <p className="text-gray-500 text-xs lg:text-sm mt-1 pl-3 lg:pl-4">Strategic driving techniques to significantly reduce road risks.</p>
+                        <h2 className="text-xl lg:text-2xl font-bold text-gray-800 border-l-4 border-red-500 pl-2 lg:pl-3">{t('home.advanced_methods')}</h2>
+                        <p className="text-gray-500 text-xs lg:text-sm mt-1 pl-3 lg:pl-4">{t('home.advanced_subtitle')}</p>
                     </div>
                     <Link to="/signs" className="text-[#0d181c] font-bold text-sm hover:underline flex items-center gap-1 mt-1 group">
-                        View All Signs
+                        {t('home.view_all_signs')}
                         <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
                     </Link>
                 </div>
@@ -78,7 +82,7 @@ const Home = ({ currentCity }) => {
 
             {/* Traffic Light Guide Section */}
             <section className="w-[90%] mx-auto my-10">
-                <h2 className="text-2xl font-bold text-gray-800 mb-6 px-2 border-l-4 border-red-500">Interactive Signal Guide</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6 px-2 border-l-4 border-red-500">{t('home.interactive_guide')}</h2>
                 <TrafficLightGuide />
             </section>
 

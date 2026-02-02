@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 import logo from '../assets/logo.png';
 import { CityConfig } from '../config/cityConfig';
 
 const Navbar = ({ currentCity, onCityChange, onScanClick, onReportClick }) => {
+    const { language, toggleLanguage, t } = useLanguage();
     const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
 
     const containerVariants = {
         hidden: { y: -100, opacity: 0 },
@@ -64,13 +67,13 @@ const Navbar = ({ currentCity, onCityChange, onScanClick, onReportClick }) => {
                 {/* Desktop Menu */}
                 <div className="hidden lg:flex items-center space-x-8 text-gray-300 font-medium text-[16px]">
                     <motion.div variants={itemVariants}>
-                        <Link to="/" className="hover:text-red-400 transition-colors cursor-pointer">Home</Link>
+                        <Link to="/" className="hover:text-red-400 transition-colors cursor-pointer">{t('footer.home') || 'Home'}</Link>
                     </motion.div>
 
                     <motion.div variants={itemVariants}>
-                        <Link to="/signs" className="hover:text-red-400 transition-colors cursor-pointer">Traffic Signs</Link>
+                        <Link to="/signs" className="hover:text-red-400 transition-colors cursor-pointer">{t('navbar.traffic_rules')}</Link>
                     </motion.div>
-                    <motion.div variants={itemVariants}><Link to="/safe-driving" className="hover:text-red-400 transition-colors cursor-pointer">Safe Driving</Link></motion.div>
+                    <motion.div variants={itemVariants}><Link to="/safe-driving" className="hover:text-red-400 transition-colors cursor-pointer">{t('navbar.safety_rules')}</Link></motion.div>
                     {/* City Switcher */}
                     <motion.div variants={itemVariants} className="relative group">
                         <button className="flex items-center space-x-1 hover:text-white cursor-pointer">
@@ -94,17 +97,25 @@ const Navbar = ({ currentCity, onCityChange, onScanClick, onReportClick }) => {
                 <div className="hidden lg:flex items-center space-x-3">
                     <motion.button
                         variants={buttonVariants}
+                        onClick={toggleLanguage}
+                        className="bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/30 px-3 py-2 rounded-full transition-all text-xs font-black cursor-pointer flex items-center gap-2"
+                    >
+                        <span>{language === 'en' ? 'HI' : 'EN'}</span>
+                    </motion.button>
+
+                    <motion.button
+                        variants={buttonVariants}
                         onClick={onScanClick}
                         className="border border-gray-500 hover:border-white hover:bg-white/10 text-white px-6 py-2 rounded-full transition-all text-sm font-medium cursor-pointer"
                     >
-                        Scan
+                        {t('navbar.scan')}
                     </motion.button>
                     <motion.button
                         variants={buttonVariants}
                         onClick={onReportClick}
                         className="bg-red-500 hover:bg-red-600 border border-red-500 text-white px-6 py-2 rounded-full transition-all text-sm font-medium cursor-pointer shadow-lg shadow-red-500/20"
                     >
-                        Report
+                        {t('navbar.report')}
                     </motion.button>
                 </div>
 
@@ -139,14 +150,14 @@ const Navbar = ({ currentCity, onCityChange, onScanClick, onReportClick }) => {
 
                         <div className="flex flex-col space-y-5 w-full max-w-sm">
                             <hr className="border-gray-800 w-full mb-2 opacity-50" />
-                            <Link to="/" onClick={() => setIsOpen(false)} className="text-lg font-medium text-gray-300 hover:text-red-400 py-1 transition-colors">Home</Link>
+                            <Link to="/" onClick={() => setIsOpen(false)} className="text-lg font-medium text-gray-300 hover:text-red-400 py-1 transition-colors">{t('footer.home') || 'Home'}</Link>
 
-                            <Link to="/signs" onClick={() => setIsOpen(false)} className="text-lg font-medium text-gray-300 hover:text-red-400 py-1 transition-colors">Traffic Signs</Link>
-                            <Link to="/safe-driving" onClick={() => setIsOpen(false)} className="text-lg font-medium text-gray-300 hover:text-red-400 py-1 transition-colors">Safe Driving</Link>
+                            <Link to="/signs" onClick={() => setIsOpen(false)} className="text-lg font-medium text-gray-300 hover:text-red-400 py-1 transition-colors">{t('navbar.traffic_rules')}</Link>
+                            <Link to="/safe-driving" onClick={() => setIsOpen(false)} className="text-lg font-medium text-gray-300 hover:text-red-400 py-1 transition-colors">{t('navbar.safety_rules')}</Link>
 
                             {/* Mobile City Selection */}
                             <div className="py-8 border-y border-gray-800 w-full">
-                                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">Switch City</p>
+                                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">{t('navbar.select_city')}</p>
                                 <div className="flex flex-wrap justify-center gap-3">
                                     {Object.keys(CityConfig).map(cityKey => (
                                         <motion.button
@@ -170,12 +181,24 @@ const Navbar = ({ currentCity, onCityChange, onScanClick, onReportClick }) => {
                                 <motion.button
                                     whileTap={{ scale: 0.98 }}
                                     onClick={() => {
+                                        toggleLanguage();
+                                        setIsOpen(false);
+                                        navigate('/');
+                                    }}
+                                    className="bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 border border-blue-500/20 px-8 py-3 rounded-full w-full text-lg font-bold flex items-center justify-center gap-3"
+                                >
+                                    <span>{language === 'en' ? 'हिन्दी (Hindi)' : 'English (EN)'}</span>
+                                </motion.button>
+
+                                <motion.button
+                                    whileTap={{ scale: 0.98 }}
+                                    onClick={() => {
                                         onScanClick();
                                         setIsOpen(false);
                                     }}
                                     className="border border-gray-600 hover:border-white text-white px-8 py-3 rounded-full w-full text-lg font-medium cursor-pointer transition-all"
                                 >
-                                    Scan
+                                    {t('navbar.scan')}
                                 </motion.button>
                                 <motion.button
                                     whileTap={{ scale: 0.98 }}
@@ -185,7 +208,7 @@ const Navbar = ({ currentCity, onCityChange, onScanClick, onReportClick }) => {
                                     }}
                                     className="bg-red-500 hover:bg-red-600 border border-red-500 text-white px-8 py-3 rounded-full w-full text-lg font-medium cursor-pointer transition-all shadow-lg shadow-red-500/20"
                                 >
-                                    Report
+                                    {t('navbar.report')}
                                 </motion.button>
                             </div>
                         </div>
