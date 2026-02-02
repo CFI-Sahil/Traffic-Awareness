@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
 const TrafficLightGuide = () => {
     const [activeLight, setActiveLight] = useState('red');
     const [isPaused, setIsPaused] = useState(false);
@@ -29,42 +28,39 @@ const TrafficLightGuide = () => {
 
     const content = {
         red: {
-            title: "STOP",
-            badge: "Full Stop Required",
-            theme: "red",
-            icon: "⛔",
-            dos: ["Stop completely before the stop line", "Wait for the green signal"],
-            donts: ["Do not cross the intersection", "Do not honk impatiently"],
+            title: "Don't Move",
+            badge: "Wait!",
+            dos: ["Stop your vehicle behind the line", "Switch off engine if wait is long"],
+            donts: ["Don't cross the stop line", "Don't honk unnecessarily"],
+            message: "Jumping a red light is a major offense.",
+            icon: <div className="w-12 h-12 rounded-full bg-red-600 shadow-[0_0_20px_rgba(220,38,38,0.5)]"></div>,
             applies: ["Car", "Bike", "Bus"],
-            message: "Running a red light is a major cause of fatal accidents.",
             bg: "bg-red-50",
             border: "border-red-100",
             text: "text-red-700",
             badgeBg: "bg-red-100 text-red-800"
         },
         yellow: {
-            title: "WAIT",
-            badge: "Prepare to Stop",
-            theme: "yellow",
-            icon: "⚠️",
-            dos: ["Slow down immediately", "Check your rear-view mirror"],
-            donts: ["Do not accelerate to beat the light", "Do not brake suddenly if unsafe"],
+            title: "Get Ready",
+            badge: "Slow!",
+            dos: ["Slow down your vehicle safely", "Stop if you haven't reached the line"],
+            donts: ["Don't speed up to beat the light", "Don't panic brake"],
+            message: "Yellow means caution, not 'speed up'.",
+            icon: <div className="w-12 h-12 rounded-full bg-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.5)]"></div>,
             applies: ["Car", "Bike", "Bus"],
-            message: "Yellow means stop, not speed up. Proceed only if unsafe to stop.",
             bg: "bg-yellow-50",
             border: "border-yellow-100",
             text: "text-yellow-700",
             badgeBg: "bg-yellow-100 text-yellow-800"
         },
         green: {
-            title: "GO",
-            badge: "Proceed with Caution",
-            theme: "green",
-            icon: "🚀",
-            dos: ["Move forward smoothly", "Scan intersection for pedestrians"],
-            donts: ["Do not block the box", "Do not overspeed"],
+            title: "You Can Go",
+            badge: "Go!",
+            dos: ["Proceed with caution", "Look both ways for pedestrians"],
+            donts: ["Don't stay stationary if green", "Don't rush blindly"],
+            message: "Green means go, but safety comes first.",
+            icon: <div className="w-12 h-12 rounded-full bg-green-500 shadow-[0_0_20px_rgba(34,197,94,0.5)]"></div>,
             applies: ["Car", "Bike", "Bus"],
-            message: "Green does not mean safe automatically. Check left and right.",
             bg: "bg-green-50",
             border: "border-green-100",
             text: "text-green-700",
@@ -133,8 +129,8 @@ const TrafficLightGuide = () => {
                                             DO
                                         </h4>
                                         <ul className="space-y-2">
-                                            {current.dos.map((item, i) => (
-                                                <li key={i} className="text-gray-700 text-sm font-medium flex items-start">
+                                            {(Array.isArray(content[activeLight].dos) ? content[activeLight].dos : []).map((item, idx) => (
+                                                <li key={idx} className="text-gray-700 text-sm font-medium flex items-start">
                                                     <span className="w-1.5 h-1.5 bg-green-500 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
                                                     {item}
                                                 </li>
@@ -147,8 +143,8 @@ const TrafficLightGuide = () => {
                                             DON'T
                                         </h4>
                                         <ul className="space-y-2">
-                                            {current.donts.map((item, i) => (
-                                                <li key={i} className="text-gray-700 text-sm font-medium flex items-start">
+                                            {(Array.isArray(content[activeLight].donts) ? content[activeLight].donts : []).map((item, idx) => (
+                                                <li key={idx} className="text-gray-700 text-sm font-medium flex items-start">
                                                     <span className="w-1.5 h-1.5 bg-red-400 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
                                                     {item}
                                                 </li>
@@ -159,7 +155,7 @@ const TrafficLightGuide = () => {
 
                                 {/* Applies To */}
                                 <div className="mt-6 flex items-center space-x-4 text-gray-500 text-sm font-semibold">
-                                    <span className="uppercase tracking-wider text-xs bg-white/50 px-2 py-1 rounded">Applies to:</span>
+                                    <span className="uppercase tracking-wider text-xs bg-white/50 px-2 py-1 rounded">Applies To</span>
                                     <div className="flex space-x-3 text-lg opacity-80">
                                         <span title="Car">🚗</span>
                                         <span title="Bike">🏍️</span>

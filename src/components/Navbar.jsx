@@ -68,7 +68,7 @@ const Navbar = ({ currentCity, onCityChange, onScanClick, onReportClick }) => {
                     </motion.div>
 
                     <motion.div variants={itemVariants}>
-                        <Link to="/signs" className="hover:text-red-400 transition-colors cursor-pointer">Signs</Link>
+                        <Link to="/signs" className="hover:text-red-400 transition-colors cursor-pointer">Traffic Signs</Link>
                     </motion.div>
                     <motion.div variants={itemVariants}><Link to="/safe-driving" className="hover:text-red-400 transition-colors cursor-pointer">Safe Driving</Link></motion.div>
                     {/* City Switcher */}
@@ -91,7 +91,6 @@ const Navbar = ({ currentCity, onCityChange, onScanClick, onReportClick }) => {
                     </motion.div>
                 </div>
 
-                {/* Action Buttons */}
                 <div className="hidden lg:flex items-center space-x-3">
                     <motion.button
                         variants={buttonVariants}
@@ -109,8 +108,7 @@ const Navbar = ({ currentCity, onCityChange, onScanClick, onReportClick }) => {
                     </motion.button>
                 </div>
 
-                {/* Mobile Menu Button */}
-                <div className="lg:hidden z-[60]">
+                <div className="lg:hidden flex items-center space-x-4 z-[60]">
                     <motion.button
                         whileTap={{ scale: 0.9 }}
                         onClick={() => setIsOpen(!isOpen)}
@@ -143,7 +141,7 @@ const Navbar = ({ currentCity, onCityChange, onScanClick, onReportClick }) => {
                             <hr className="border-gray-800 w-full mb-2 opacity-50" />
                             <Link to="/" onClick={() => setIsOpen(false)} className="text-lg font-medium text-gray-300 hover:text-red-400 py-1 transition-colors">Home</Link>
 
-                            <Link to="/signs" onClick={() => setIsOpen(false)} className="text-lg font-medium text-gray-300 hover:text-red-400 py-1 transition-colors">Signs</Link>
+                            <Link to="/signs" onClick={() => setIsOpen(false)} className="text-lg font-medium text-gray-300 hover:text-red-400 py-1 transition-colors">Traffic Signs</Link>
                             <Link to="/safe-driving" onClick={() => setIsOpen(false)} className="text-lg font-medium text-gray-300 hover:text-red-400 py-1 transition-colors">Safe Driving</Link>
 
                             {/* Mobile City Selection */}

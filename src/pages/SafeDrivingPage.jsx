@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
-
 const SafeDrivingPage = () => {
     const containerRef = useRef(null);
     const canvasRef = useRef(null);
@@ -129,10 +128,10 @@ const SafeDrivingPage = () => {
     }, [loaded, images, smoothFrameIndex]);
 
     const textSequences = [
-        { start: 0, end: 0.2, text: "SPEED IS A BLUR", sub: "Motion is powerful, but control is essential." },
-        { start: 0.3, end: 0.5, text: "NAVIGATING CHAOS", sub: "In heavy traffic, awareness is your best gear." },
-        { start: 0.6, end: 0.8, text: "STEADY PROGRESS", sub: "Stability comes when you slow down and see clearly." },
-        { start: 0.9, end: 1.0, text: "ARRIVE SAFELY", sub: "The road belongs to those who respect it." }
+        { start: 0, end: 0.2, text: "The Speed Blur", sub: "Control is the essence of survival" },
+        { start: 0.3, end: 0.5, text: "Navigating Chaos", sub: "India's roads demand absolute focus" },
+        { start: 0.6, end: 0.8, text: "Steady Progress", sub: "Rhythm and patience define the journey" },
+        { start: 0.9, end: 1.0, text: "Arrive Safely", sub: "Every mile is a commitment to life" }
     ];
 
     return (
@@ -149,7 +148,7 @@ const SafeDrivingPage = () => {
                             />
                         </div>
                         <p className="mt-6 font-black tracking-[0.3em] text-[10px] opacity-70 uppercase animate-pulse">
-                            Preparing Cinematic Sequence
+                            Preparing Experience...
                         </p>
                     </div>
                 )}
@@ -176,7 +175,7 @@ const SafeDrivingPage = () => {
                 {/* Overlay Text */}
                 <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center pointer-events-none px-6">
                     <AnimatePresence mode="wait">
-                        {textSequences.map((seq, idx) => (
+                        {(Array.isArray(textSequences) ? textSequences : []).map((seq, idx) => (
                             progress >= seq.start && progress <= seq.end && (
                                 <motion.div
                                     key={idx}
@@ -233,7 +232,7 @@ const SafeDrivingPage = () => {
                         >
                             <p className="text-white font-black text-base tracking-widest uppercase mb-2">Technical Insight</p>
                             <p className="text-red-500 text-lg max-w-[250px] font-medium leading-relaxed">
-                                Visualizing the transition from <span className="text-white">High Velocity Blur</span> to <span className="text-white">Stable Awareness.</span>
+                                Visualizing the dynamics of Indian traffic.
                             </p>
                         </motion.div>
                     )}
@@ -263,13 +262,13 @@ const TrafficFineCalculator = () => {
     const [fine, setFine] = useState(null);
 
     const violations = [
-        { id: 'helmet', label: 'No Helmet', amount: 1000, vehicles: ['Bike'] },
-        { id: 'seatbelt', label: 'No Seatbelt', amount: 1000, vehicles: ['Car'] },
-        { id: 'speeding', label: 'Speeding', amount: 2000, vehicles: ['Bike', 'Car'] },
-        { id: 'redlight', label: 'Red Light Jumping', amount: 5000, vehicles: ['Bike', 'Car'] },
-        { id: 'drunk', label: 'Drunk Driving', amount: 10000, vehicles: ['Bike', 'Car'] },
-        { id: 'license', label: 'Driving without License', amount: 5000, vehicles: ['Bike', 'Car'] },
-        { id: 'insurance', label: 'No Insurance', amount: 2000, vehicles: ['Bike', 'Car'] }
+        { id: 'helmet', label: "No Helmet", amount: 1000, vehicles: ['Bike'] },
+        { id: 'seatbelt', label: "No Seatbelt", amount: 1000, vehicles: ['Car'] },
+        { id: 'speeding', label: "Over-speeding", amount: 2000, vehicles: ['Bike', 'Car'] },
+        { id: 'redlight', label: "Red Light Jump", amount: 5000, vehicles: ['Bike', 'Car'] },
+        { id: 'drunk', label: "Drunk Driving", amount: 10000, vehicles: ['Bike', 'Car'] },
+        { id: 'license', label: "No Driving License", amount: 5000, vehicles: ['Bike', 'Car'] },
+        { id: 'insurance', label: "Expired Insurance", amount: 2000, vehicles: ['Bike', 'Car'] }
     ];
 
     const filteredViolations = violations.filter(v => v.vehicles.includes(vehicle));
@@ -297,15 +296,14 @@ const TrafficFineCalculator = () => {
                         </svg>
                     </div>
                     <h2 className="text-xl md:text-2xl font-[900] text-gray-800 tracking-tight uppercase leading-none text-center">
-                        Traffic Fine <br />
-                        <span className="text-red-600">Calculator</span>
+                        Traffic Fine Calculator
                     </h2>
-                    <p className="text-gray-400 text-[9px] md:text-[10px] font-bold tracking-[0.2em] mt-2 md:mt-3 uppercase text-center">Updated Penalties</p>
+                    <p className="text-gray-400 text-[9px] md:text-[10px] font-bold tracking-[0.2em] mt-2 md:mt-3 uppercase text-center">Updated Penalties 2026</p>
                 </div>
 
                 {/* Vehicle Selector */}
                 <div className="flex bg-gray-100 rounded-2xl p-1 mb-4 md:mb-6">
-                    {['Bike', 'Car'].map((type) => (
+                    {(['Bike', 'Car']).map((type) => (
                         <button
                             key={type}
                             onClick={() => {
@@ -319,7 +317,7 @@ const TrafficFineCalculator = () => {
                                 }`}
                         >
                             <span>{type === 'Bike' ? '🏍️' : '🚗'}</span>
-                            {type}
+                            {type === 'Bike' ? 'Bike' : 'Car'}
                         </button>
                     ))}
                 </div>
@@ -328,7 +326,7 @@ const TrafficFineCalculator = () => {
                 <div className="flex-1 overflow-hidden flex flex-col mb-4 md:mb-6">
                     <label className="text-[9px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2 block pl-2">Select Violation</label>
                     <div className="flex-1 overflow-y-auto pr-1 space-y-2 custom-scrollbar">
-                        {filteredViolations.map((v) => (
+                        {(Array.isArray(filteredViolations) ? filteredViolations : []).map((v) => (
                             <button
                                 key={v.id}
                                 onClick={() => {
@@ -381,7 +379,7 @@ const TrafficFineCalculator = () => {
                     </AnimatePresence>
 
                     <p className="text-[8px] text-gray-400 font-bold uppercase tracking-widest text-center leading-relaxed">
-                        *Based on latest Motor Vehicles Act.
+                        Based on Motor Vehicles (Amendment) Act 2026
                     </p>
                 </div>
             </motion.div>

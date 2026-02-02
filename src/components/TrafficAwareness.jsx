@@ -3,120 +3,120 @@ import { motion, AnimatePresence } from 'framer-motion';
 import brainIcon from '../assets/brain_icon.png';
 import InteractiveMapSection from './InteractiveMapSection';
 
-const awarenessTopics = [
-    {
-        id: 1,
-        tip: {
-            title: "Helmet Safety",
-            desc: "Always wear a helmet, even for short rides. It reduces the risk of serious head injury by up to 70%.",
-            icon: "⛑️",
-            color: "bg-blue-600"
-        },
-        fact: "Helmets reduce the risk of fatal head injury by up to 70% for two-wheeler riders.",
-        fine: { offense: "Riding Without Helmet", fine: "₹1,000 + DQ" }
-    },
-    {
-        id: 2,
-        tip: {
-            title: "Seat Belt Safety",
-            desc: "Buckle up before starting the engine. Seat belts protect everyone — front and back seats.",
-            icon: "🛡️",
-            color: "bg-green-600"
-        },
-        fact: "Seat belts reduce the risk of death by nearly 45% in car accidents.",
-        fine: { offense: "Driving Without Seat Belt", fine: "₹1,000" }
-    },
-    {
-        id: 3,
-        tip: {
-            title: "No Mobile While Driving",
-            desc: "Keep your phone away while driving or riding. One distraction is enough to cause a life-changing accident.",
-            icon: "📵",
-            color: "bg-red-500"
-        },
-        fact: "Using a mobile phone while driving increases crash risk by 4 times.",
-        fine: { offense: "Using Mobile While Driving", fine: "₹5,000" }
-    },
-    {
-        id: 4,
-        tip: {
-            title: "Speed Control",
-            desc: "Drive within speed limits, especially in cities. Lower speed gives you more reaction time and control.",
-            icon: "🛑",
-            color: "bg-orange-500"
-        },
-        fact: "Over-speeding is responsible for more than 60% of road accidents in India.",
-        fine: { offense: "Over-Speeding", fine: "₹2,000" }
-    },
-    {
-        id: 5,
-        tip: {
-            title: "Night Driving Safety",
-            desc: "Use headlights properly after sunset. Poor visibility is a major cause of night-time accidents.",
-            icon: "🌙",
-            color: "bg-indigo-600"
-        },
-        fact: "Drunk driving reduces reaction time by more than 50%.",
-        fine: { offense: "Drunk & Drive", fine: "₹10,000 + Jail" }
-    },
-    {
-        id: 6,
-        tip: {
-            title: "Wet Road Safety",
-            desc: "Slow down on wet or slippery roads. Braking distance increases during rain.",
-            icon: "🌧️",
-            color: "bg-cyan-600"
-        },
-        fact: "Following traffic rules can prevent up to 90% of road accidents.",
-        fine: { offense: "Jumping Red Signal", fine: "₹5,000" }
-    },
-    {
-        id: 7,
-        tip: {
-            title: "Pedestrian Safety",
-            desc: "Always stop at zebra crossings. Pedestrians have the right of way.",
-            icon: "🚶",
-            color: "bg-yellow-500"
-        },
-        fact: "Pedestrians and two-wheeler riders form the majority of road accident victims.",
-        fine: { offense: "Not Giving Way to Ambulance", fine: "₹10,000" }
-    },
-    {
-        id: 8,
-        tip: {
-            title: "Two-Wheeler Safety",
-            desc: "Wear protective shoes and gloves while riding. Proper gear reduces injuries during falls.",
-            icon: "🏍️",
-            color: "bg-purple-600"
-        },
-        fact: "Wearing reflective gear at night can reduce accident risk significantly.",
-        fine: { offense: "No Valid Insurance", fine: "₹2,000" }
-    },
-    {
-        id: 9,
-        tip: {
-            title: "Overtaking Safety",
-            desc: "Overtake only when the road ahead is clear. Wrong overtaking is one of the deadliest mistakes.",
-            icon: "↩️",
-            color: "bg-teal-600"
-        },
-        fact: "Night-time accidents are deadlier due to poor visibility and fatigue.",
-        fine: { offense: "Driving Without License", fine: "₹5,000" }
-    },
-    {
-        id: 10,
-        tip: {
-            title: "Child Safety",
-            desc: "Ensure children use proper seats or helmets. A child’s safety needs extra protection.",
-            icon: "👶",
-            color: "bg-pink-500"
-        },
-        fact: "Most road accidents happen within 5–10 km of home, not on highways.",
-        fine: { offense: "Overloading Passengers", fine: "₹2,000 +" }
-    }
-];
-
 const TrafficAwareness = () => {
+    const awarenessTopics = [
+        {
+            id: 1,
+            tip: {
+                title: "Helmet Safety",
+                desc: "Always wear a certified helmet. It reduces Head Injury risk by 70%.",
+                icon: "⛑️",
+                color: "bg-blue-600"
+            },
+            fact: "Every year, over 1.5 lakh people die in road accidents in India.",
+            fine: { offense: "Driving without helmet", fine: "₹1,000 + 3 months disqualification" }
+        },
+        {
+            id: 2,
+            tip: {
+                title: "Seatbelt First",
+                desc: "Seatbelts reduce the risk of death among drivers by 45-50%.",
+                icon: "🛡️",
+                color: "bg-green-600"
+            },
+            fact: "In 2022, nearly 17,000 people died for not wearing seatbelts in India.",
+            fine: { offense: "Driving without seatbelt", fine: "₹1,000" }
+        },
+        {
+            id: 3,
+            tip: {
+                title: "Drink & Drive",
+                desc: "Alcohol impairs judgment. Never drink and drive, no matter the distance.",
+                icon: "⛑️️",
+                color: "bg-red-500"
+            },
+            fact: "Even a small amount of alcohol can double the risk of a fatal crash.",
+            fine: { offense: "Drunk Driving (1st offense)", fine: "₹10,000 and/or 6 months prison" }
+        },
+        {
+            id: 4,
+            tip: {
+                title: "Speed Limits",
+                desc: "Speeding is a major cause of fatal accidents. Stick to the limits.",
+                icon: "🛑",
+                color: "bg-orange-500"
+            },
+            fact: "Overspeeding accounts for over 70% of road accidents in India.",
+            fine: { offense: "Overspeeding", fine: "₹1,000 - ₹2,000 (LMV)" }
+        },
+        {
+            id: 5,
+            tip: {
+                title: "Night Vision",
+                desc: "Use high beams responsibly. Dim lights for oncoming traffic.",
+                icon: "🌙",
+                color: "bg-indigo-600"
+            },
+            fact: "Night-time accidents are often more fatal due to visibility issues.",
+            fine: { offense: "Improper use of high beam", fine: "₹500" }
+        },
+        {
+            id: 6,
+            tip: {
+                title: "Rainy Roads",
+                desc: "Slow down on wet roads to avoid aquaplaning and skidding.",
+                icon: "🌧️",
+                color: "bg-cyan-600"
+            },
+            fact: "Wet roads increase braking distance by up to 10 times.",
+            fine: { offense: "Dangerous Driving", fine: "₹1,000 - ₹5,000" }
+        },
+        {
+            id: 7,
+            tip: {
+                title: "Pedestrian Cross",
+                desc: "Always stop for pedestrians at zebra crossings. It's their right.",
+                icon: "🚶",
+                color: "bg-yellow-500"
+            },
+            fact: "Pedestrians are the most vulnerable road users in urban areas.",
+            fine: { offense: "Blocking Zebra Crossing", fine: "₹500" }
+        },
+        {
+            id: 8,
+            tip: {
+                title: "Lane Discipline",
+                desc: "Stay in your lane. Use indicators before changing directions.",
+                icon: "🏍️",
+                color: "bg-purple-600"
+            },
+            fact: "Sudden lane changes cause over 15% of highway accidents.",
+            fine: { offense: "Wrong Lane Driving", fine: "₹500" }
+        },
+        {
+            id: 9,
+            tip: {
+                title: "Wrong Way",
+                desc: "Never drive against the traffic. It's extremely dangerous.",
+                icon: "↩️",
+                color: "bg-teal-600"
+            },
+            fact: "Driving on wrong side is a leading cause of head-on collisions.",
+            fine: { offense: "Driving against traffic", fine: "₹5,000" }
+        },
+        {
+            id: 10,
+            tip: {
+                title: "Child Safety",
+                desc: "Children should always be in the back seat with adult supervision.",
+                icon: "👶",
+                color: "bg-pink-500"
+            },
+            fact: "Child restraints can reduce infant deaths by 70% in crashes.",
+            fine: { offense: "Unsafe transport of children", fine: "₹1,000" }
+        }
+    ];
+
     const [tipIndex, setTipIndex] = useState(0);
     const [factIndex, setFactIndex] = useState(0);
     const [fineIndex, setFineIndex] = useState(0);
@@ -152,9 +152,14 @@ const TrafficAwareness = () => {
         return () => clearInterval(interval);
     }, [isFinePaused]);
 
-    const { tip: currentTip } = awarenessTopics[tipIndex];
-    const { fact: currentFact } = awarenessTopics[factIndex];
-    const { fine: currentFine } = awarenessTopics[fineIndex];
+    const currentTopic = awarenessTopics[tipIndex] || { tip: {} };
+    const currentTip = currentTopic.tip || {};
+
+    const factTopic = awarenessTopics[factIndex] || {};
+    const currentFact = factTopic.fact || "";
+
+    const fineTopic = awarenessTopics[fineIndex] || { fine: {} };
+    const currentFine = fineTopic.fine || {};
 
     const [isMobile, setIsMobile] = useState(false);
 
@@ -231,7 +236,7 @@ const TrafficAwareness = () => {
 
                     {/* Footer */}
                     <div className="bg-gray-50 p-4 border-t border-gray-100 flex justify-between items-center text-sm text-gray-500 font-medium">
-                        <span className="text-blue-600 cursor-pointer">Know more</span>
+                        <span className="text-blue-600 cursor-pointer">Know More</span>
                         <button className="flex items-center space-x-1 hover:text-blue-600 transition-colors cursor-pointer">
                             <span>👍</span> <span>Share</span>
                         </button>
@@ -279,7 +284,7 @@ const TrafficAwareness = () => {
 
                     {/* Footer */}
                     <div className="bg-gray-50 p-4 border-t border-gray-100 flex justify-center items-center text-sm text-purple-600 font-bold">
-                        Use Knowledge, Save Lives
+                        Let's use this knowledge to save lives!
                     </div>
                 </motion.div>
 
@@ -299,7 +304,7 @@ const TrafficAwareness = () => {
                         <div className="bg-white p-2 rounded-full shadow-sm">
                             <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
-                        <h3 className="text-xl font-bold text-slate-800 tracking-tight">Traffic Fines 2026</h3>
+                        <h3 className="text-xl font-bold text-slate-800 tracking-tight">Fines Awareness 2026</h3>
                     </div>
 
                     {/* Content */}
@@ -319,7 +324,7 @@ const TrafficAwareness = () => {
                                     {currentFine.offense}
                                 </h4>
                                 <div className="mt-4">
-                                    <span className="text-sm font-bold text-gray-400 uppercase tracking-widest">Penalty up to</span>
+                                    <span className="text-sm font-bold text-gray-400 uppercase tracking-widest">Penalty Up To</span>
                                     <div className="text-4xl font-black text-red-600 mt-1 drop-shadow-sm">
                                         {currentFine.fine}
                                     </div>
@@ -330,7 +335,7 @@ const TrafficAwareness = () => {
 
                     {/* Footer */}
                     <div className="bg-gray-50 p-4 border-t border-gray-100 flex justify-between items-center text-sm text-gray-500 font-medium">
-                        <span className="text-red-500 font-bold animate-pulse">Stay Aware</span>
+                        <span className="text-red-500 font-bold animate-pulse">Stay Aware, Stay Safe!</span>
                     </div>
                 </motion.div>
             </div>

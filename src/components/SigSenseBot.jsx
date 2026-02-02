@@ -6,8 +6,8 @@ import sigSenseLogo from '../assets/sigsense_logo_cutout.png';
 
 // -- Configuration & API Keys --
 const API_KEYS = [
-    import.meta.env.VITE_GEMINI_KEY_1,
-    import.meta.env.VITE_GEMINI_KEY_2
+    import.meta.env.VITE_TRAFFIC_API_KEY_1,
+    import.meta.env.VITE_TRAFFIC_API_KEY_2
 ];
 
 const SYSTEM_PROMPT = `You are the "SigSense Traffic Safety Assistant."

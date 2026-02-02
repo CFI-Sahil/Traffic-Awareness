@@ -4,8 +4,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // -- Configuration & API Keys --
 const API_KEYS = [
-    import.meta.env.VITE_GEMINI_KEY_1,
-    import.meta.env.VITE_GEMINI_KEY_2
+    import.meta.env.VITE_TRAFFIC_API_KEY_1,
+    import.meta.env.VITE_TRAFFIC_API_KEY_2
 ];
 
 const REPORT_PROMPT = `Role: You are an Emergency Roadside Response Specialist.
@@ -156,7 +156,7 @@ const AccidentReporter = ({ isOpen, onClose, onSwitchToScan }) => {
                                     <AlertIcon />
                                 </div>
                                 <div>
-                                    <h2 className="text-xl font-bold">Report Incident</h2>
+                                    <h2 className="text-xl font-bold">Accident Reporter</h2>
                                     <p className="text-xs opacity-80 uppercase tracking-widest font-bold">Emergency Support</p>
                                 </div>
                             </div>
@@ -237,7 +237,7 @@ const AccidentReporter = ({ isOpen, onClose, onSwitchToScan }) => {
                                                 }`}
                                         >
                                             {isLoading ? <Spinner className="w-5 h-5 animate-spin" /> : <ReportIcon className="w-5 h-5" />}
-                                            {isLoading ? "Analyzing Scene..." : "Analyze Incident"}
+                                            {isLoading ? "Analyzing..." : "Analyze Incident"}
                                         </button>
                                     )}
 
@@ -258,7 +258,7 @@ const AccidentReporter = ({ isOpen, onClose, onSwitchToScan }) => {
                                                 <div className="space-y-4">
                                                     <div className="bg-green-50 rounded-2xl p-4 border border-green-100">
                                                         <h4 className="text-green-800 font-bold text-sm uppercase flex items-center gap-2 mb-2">
-                                                            <CheckIcon className="w-4 h-4" /> What to do
+                                                            <CheckIcon className="w-4 h-4" /> What to do?
                                                         </h4>
                                                         <ul className="space-y-2">
                                                             {result.dos.map((doItem, i) => (
@@ -270,7 +270,7 @@ const AccidentReporter = ({ isOpen, onClose, onSwitchToScan }) => {
                                                     </div>
                                                     <div className="bg-red-50 rounded-2xl p-4 border border-red-100">
                                                         <h4 className="text-red-800 font-bold text-sm uppercase flex items-center gap-2 mb-2">
-                                                            <XIcon className="w-4 h-4" /> What NOT to do
+                                                            <XIcon className="w-4 h-4" /> What NOT to do?
                                                         </h4>
                                                         <ul className="space-y-2">
                                                             {result.donts.map((dontItem, i) => (
@@ -290,7 +290,7 @@ const AccidentReporter = ({ isOpen, onClose, onSwitchToScan }) => {
                                                             onClick={() => { clear(); onSwitchToScan(); }}
                                                             className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-full font-bold text-sm cursor-pointer shadow-lg shadow-blue-500/20"
                                                         >
-                                                            Go to Scan
+                                                            Scan
                                                         </button>
                                                     )}
                                                 </div>

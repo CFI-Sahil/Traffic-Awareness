@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import r1 from '../assets/r1.png';
 import r2 from '../assets/r2.png';
@@ -39,146 +39,26 @@ const TrafficSignsPage = () => {
     };
 
     const rules = [
-        {
-            id: 1,
-            title: "Emergency Vehicles",
-            desc: "Give way to Ambulance, Fire, Police.",
-            longDesc: "Always pull over to the side of the road and stop to provide a clear path for emergency vehicles. Your swift action can save lives during critical situations.",
-            icon: <img src={r1} alt="Emergency" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 2,
-            title: "Zebra Crossing",
-            desc: "Stop. Let pedestrians cross safely.",
-            longDesc: "Yield to pedestrians at zebra crossings. It is mandatory to stop completely when a person is on the crossing, ensuring their safe passage without any intimidation.",
-            icon: <img src={r2} alt="Crossing" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 3,
-            title: "No Overtaking",
-            desc: "Do not overtake from the wrong side.",
-            longDesc: "Overtaking on bends, narrow roads, or from the left side in India is extremely dangerous. Always check your mirrors and signal long before making a safe overtaking maneuver.",
-            icon: <img src={r3} alt="Overtaking" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 4,
-            title: "Over Speeding",
-            desc: "Do not overspeed. Follow posted limits.",
-            longDesc: "High speeds significantly reduce your reaction time and increase the severity of accidents. Adhering to speed limits ensures safety for you and others on the road.",
-            icon: <img src={r4} alt="Speeding" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 5,
-            title: "Safe Distance",
-            desc: "Maintain safe gap between vehicles.",
-            longDesc: "Follow the 'two-second rule' to keep a safe buffer between you and the vehicle ahead. This provides enough space to stop safely if the vehicle in front brakes suddenly.",
-            icon: <img src={r5} alt="Distance" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 6,
-            title: "No Mobile Phone",
-            desc: "Don't use phone while driving.",
-            longDesc: "Using a mobile phone distracts you from the road and slows down your response time. Pull over to a safe area if you must take an urgent call or use navigation.",
-            icon: <img src={r6} alt="Phone" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 7,
-            title: "Lane Discipline",
-            desc: "Stay to road lane safely.",
-            longDesc: "Maintain a steady course within your lane and avoid weaving through traffic. Consistent lane discipline reduces the risk of side-swipe collisions and improves overall traffic flow.",
-            icon: <img src={r7} alt="Lane" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 8,
-            title: "Indicator Signals",
-            desc: "Don't change lanes without signal.",
-            longDesc: "Always indicate your intention to turn or change lanes well in advance. Signaling helps other drivers anticipate your moves, preventing confusion and potential accidents.",
-            icon: <img src={r8} alt="Signal" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 9,
-            title: "No Drunk Driving",
-            desc: "Alcohol and driving don't mix.",
-            longDesc: "Driving under the influence of alcohol significantly impairs your judgment, coordination, and vision. It is a major cause of fatal road accidents and is a serious legal offense.",
-            icon: <img src={r9} alt="Drunk" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 10,
-            title: "Seat-belt Safety",
-            desc: "Always buckle up for safety.",
-            longDesc: "Seat-belts are the most effective way to prevent serious injury during a collision. Ensure every passenger in the vehicle is buckled up properly before starting the journey.",
-            icon: <img src={r10} alt="Seatbelt" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 11,
-            title: "Speed Limit",
-            desc: "Slow down within city limits.",
-            longDesc: "Strictly follow the speed limits marked for residential and commercial areas. Lower speeds in these zones protect pedestrians, cyclists, and local residents.",
-            icon: <img src={r11} alt="Limit" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 12,
-            title: "No Parking",
-            desc: "Unauthorized parking is prohibited.",
-            longDesc: "Avoid parking your vehicle in 'No Parking' zones or on busy roads. Improper parking creates traffic bottlenecks and can lead to towing or heavy fines.",
-            icon: <img src={r12} alt="Parking" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 13,
-            title: "One-Way Traffic",
-            desc: "Do not enter from the opposite side.",
-            longDesc: "Observe 'No Entry' signs diligently. Entering a one-way street from the wrong direction pose a high risk of head-on collisions and disrupts the intended traffic flow.",
-            icon: <img src={r13} alt="Oneway" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 14,
-            title: "Pedestrian Priority",
-            desc: "Give priority to people crossing.",
-            longDesc: "Always be mindful of pedestrians, especially children, elderly, and disabled individuals. Slow down in areas with heavy foot traffic and give them the right of way.",
-            icon: <img src={r14} alt="Pedestrian" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 15,
-            title: "U-Turn Prohibited",
-            desc: "U-turns are dangerous at this point.",
-            longDesc: "Never attempt a U-turn where it is prohibited by signs or at busy intersections. Use designated U-turn points or take a longer route to ensure safety.",
-            icon: <img src={r15} alt="U-Turn" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 16,
-            title: "No Horn Zone",
-            desc: "Silence requested in hospital zones.",
-            longDesc: "Avoid unnecessary honking, especially near hospitals, schools, and silent zones. Excessive noise pollution is detrimental to health and causes significant stress to others.",
-            icon: <img src={r16} alt="NoHorn" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 17,
-            title: "School Zone",
-            desc: "Drive slowly near school areas.",
-            longDesc: "Exercise extreme caution when driving near schools. Children can be unpredictable; maintain a low speed and be prepared to stop instantly if necessary.",
-            icon: <img src={r17} alt="School" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 18,
-            title: "Narrow Path",
-            desc: "Slow down on narrow sections.",
-            longDesc: "On narrow roads, reduce your speed and be ready to pull over to let vehicles from the opposite direction pass. Patience is key to safely navigating tight spaces.",
-            icon: <img src={r18} alt="Narrow" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 19,
-            title: "Slippery Road",
-            desc: "Be careful on wet or oily roads.",
-            longDesc: "Wet, icy, or oily surfaces reduce tyre grip drastically. Drive at lower speeds, avoid sudden braking, and maintain extra distance from other vehicles in these conditions.",
-            icon: <img src={r19} alt="Slippery" className="w-full h-full object-contain p-2" />
-        },
-        {
-            id: 20,
-            title: "Speed Breaker",
-            desc: "Slow down for speed breakers ahead.",
-            longDesc: "Always reduce speed when approaching a speed breaker to avoid vehicle damage and ensure passenger comfort. Speed breakers are placed to enforce safety in sensitive areas.",
-            icon: <img src={r20} alt="SpeedBreaker" className="w-full h-full object-contain p-2" />
-        }
+        { id: 1, title: "Stop", desc: "Mandatory stop", longDesc: "Drivers must bring their vehicle to a complete halt before the stop line or at the intersection.", icon: r1 },
+        { id: 2, title: "Give Way", desc: "Yield right of way", longDesc: "Slow down or stop if necessary to let other vehicles pass before proceeding.", icon: r2 },
+        { id: 3, title: "No Entry", desc: "No vehicles allowed", longDesc: "Vehicles are prohibited from entering this area from this direction.", icon: r3 },
+        { id: 4, title: "Straight Prohibited", desc: "No forward movement", longDesc: "Vehicles are not allowed to move straight ahead; they must turn left or right.", icon: r4 },
+        { id: 5, title: "One Way", desc: "Single direction only", longDesc: "Traffic is permitted in only one direction; vehicles must not travel in the opposite direction.", icon: r5 },
+        { id: 6, title: "One Way", desc: "Single direction only", longDesc: "Traffic is permitted in only one direction from the other side. Entry prohibited here.", icon: r6 },
+        { id: 7, title: "No U-Turn", desc: "180-degree turn forbidden", longDesc: "You must not perform a U-turn at this point or in this section of the road.", icon: r7 },
+        { id: 8, title: "No Overtaking", desc: "Do not pass others", longDesc: "Drivers are prohibited from overtaking other vehicles for safety and traffic flow reasons.", icon: r8 },
+        { id: 9, title: "No Horns", desc: "Silent zone", longDesc: "Sounding of horns is prohibited, typically near hospitals, schools, or residential areas.", icon: r9 },
+        { id: 10, title: "No Parking", desc: "Waiting allowed only", longDesc: "Vehicles cannot be parked in this area, but short stops for loading/unloading might be allowed.", icon: r10 },
+        { id: 11, title: "No Standing", desc: "No stopping allowed", longDesc: "Stopping or standing of vehicles is strictly prohibited in this specific zone.", icon: r11 },
+        { id: 12, title: "Speed Limit 50", desc: "Max speed 50 km/h", longDesc: "The maximum speed allowed on this stretch of road is fifty kilometers per hour.", icon: r12 },
+        { id: 13, title: "Right Turn Prohibited", desc: "No right turn", longDesc: "Making a right turn into the intersecting road is not allowed at this junction.", icon: r13 },
+        { id: 14, title: "Left Turn Prohibited", desc: "No left turn", longDesc: "Making a left turn into the intersecting road is not allowed at this junction.", icon: r14 },
+        { id: 15, title: "Compulsory Left Turn", desc: "Turn left only", longDesc: "All vehicles must turn left and follow the direction indicated by the arrow.", icon: r15 },
+        { id: 16, title: "Narrow Bridge Ahead", desc: "Caution: Bridge narrow", longDesc: "The road ahead narrows for a bridge; prepare to slow down or yield to oncoming traffic.", icon: r16 },
+        { id: 17, title: "School Ahead", desc: "Watch for children", longDesc: "A school is nearby. Reduce speed and be prepared to stop for children crossing.", icon: r17 },
+        { id: 18, title: "Pedestrian Crossing", desc: "Zebra crossing", longDesc: "Yield to pedestrians who are crossing or waiting to cross the road.", icon: r18 },
+        { id: 19, title: "Roundabout Ahead", desc: "Circle junction", longDesc: "Approaching a circular intersection. Give way to traffic already in the roundabout.", icon: r19 },
+        { id: 20, title: "Steep Ascent", desc: "Uphill climb", longDesc: "Prepare for a steep incline ahead. Use lower gears if necessary for better control.", icon: r20 }
     ];
 
     const cardVariants = {
@@ -258,7 +138,7 @@ const TrafficSignsPage = () => {
                                         style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
                                     >
                                         <div className="bg-gray-50 text-[#0d181c] w-24 h-24 rounded-3xl flex items-center justify-center text-5xl mb-6 transition-transform duration-500 hover:scale-110">
-                                            {rule.icon}
+                                            <img src={rule.icon} alt={rule.title} className="w-full h-full object-contain p-2" />
                                         </div>
                                         <h3 className="text-xl font-black tracking-tight uppercase mb-2">
                                             {rule.title}

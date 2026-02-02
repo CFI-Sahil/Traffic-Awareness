@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -96,7 +96,7 @@ const LiveTrafficMap = ({ incidents, center }) => {
 
             {/* Map Overlay Text */}
             <div className="absolute top-4 left-4 z-[400] bg-black/60 backdrop-blur-md px-3 py-1 rounded text-xs text-white border border-white/10">
-                Live Traffic Feed • Mappls Source
+                Live Map Feed
             </div>
         </div>
     );

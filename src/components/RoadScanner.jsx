@@ -5,8 +5,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // -- Configuration & API Keys --
 const API_KEYS = [
-    import.meta.env.VITE_GEMINI_KEY_1,
-    import.meta.env.VITE_GEMINI_KEY_2
+    import.meta.env.VITE_TRAFFIC_API_KEY_1,
+    import.meta.env.VITE_TRAFFIC_API_KEY_2
 ];
 
 const SCAN_PROMPT = `Role: You are the Real-Time Computer Vision Engine for "SigSense" (Road Safety App).
@@ -44,7 +44,6 @@ const RoadScanner = ({ isOpen, onClose }) => {
             setPreview(URL.createObjectURL(file));
             setResult(null);
             setError(null);
-            setShowCameraConfirm(false);
         }
     };
 
@@ -165,7 +164,7 @@ const RoadScanner = ({ isOpen, onClose }) => {
                                     <ScanIcon />
                                 </div>
                                 <div>
-                                    <h2 className="text-xl font-bold">Road Sign Scanner</h2>
+                                    <h2 className="text-xl font-bold">AI Road Scanner</h2>
                                     <p className="text-xs text-blue-300 font-medium uppercase tracking-wider">AI Powered Analysis</p>
                                 </div>
                             </div>
@@ -286,7 +285,7 @@ const RoadScanner = ({ isOpen, onClose }) => {
                                                     {result.detection_status === 'low_confidence' ? <ScanIcon /> : <InfoIcon />}
                                                 </div>
                                                 <h3 className="font-bold text-gray-800">
-                                                    {result.detection_status === 'low_confidence' ? 'Attention Needed' : 'Analysis Complete'}
+                                                    {result.detection_status === 'low_confidence' ? "Attention Needed" : "Analysis Complete"}
                                                 </h3>
                                             </div>
 
@@ -319,7 +318,7 @@ const RoadScanner = ({ isOpen, onClose }) => {
                                                 onClick={clearScanner}
                                                 className="mt-6 w-full py-4 bg-white border border-gray-200 text-gray-600 rounded-2xl hover:bg-gray-50 transition-all font-bold shadow-sm active:scale-[0.98] cursor-pointer"
                                             >
-                                                Scan New Sign
+                                                Scan New
                                             </button>
                                         </motion.div>
                                     )}

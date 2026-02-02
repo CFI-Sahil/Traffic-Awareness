@@ -59,7 +59,7 @@ const SafetyCarousel = () => {
                     <img src={logo} alt="Safe Roads India" className="h-full w-auto object-contain invert-0 brightness-600" />
                 </div>
                 <div className="h-10 md:h-14 bg-green-300 p-3 md:p-6 px-3 xl:px-10 rounded-r-full shadow-md flex items-center">
-                    <h2 className="text-[14px] sm:text-lg md:text-xl font-bold text-gray-700 tracking-wide uppercase whitespace-nowrap">Traffic Safety Reminders</h2>
+                    <h2 className="text-[14px] sm:text-lg md:text-xl font-bold text-gray-700 tracking-wide uppercase whitespace-nowrap">Safety Reminders</h2>
                 </div>
             </motion.div>
 

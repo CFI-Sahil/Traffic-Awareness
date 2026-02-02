@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import ban2 from '../assets/b1.png';
 import { fetchWeather } from '../services/weatherService';
-
 const HeroBanner = ({ cityData }) => {
     const [weather, setWeather] = useState('Clear'); // 'Clear', 'Rain', 'Fog'
 
@@ -47,13 +46,12 @@ const HeroBanner = ({ cityData }) => {
                         {/* Main Text Content */}
                         <div className="flex-1 ml-0 text-center md:text-left">
 
-                            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-white leading-tight font-sans tracking-tight">
-                                YOUR JOURNEY,
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">YOUR SAFETY.</span><br />
+                            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-white leading-tight font-sans tracking-tight">
+                                YOUR JOURNEY,<span className="text-cyan-400">YOUR SAFETY.</span><br />
                                 DRIVE SMARTER.
                             </h1>
 
-                            <p className="mt-4 text-gray-300 max-w-lg text-sm md:text-base leading-relaxed">
+                            <p className="mt-6 text-gray-300 max-w-xl text-sm md:text-base leading-relaxed font-medium">
                                 Real-time traffic monitoring powered by AI. Get live alerts, traffic-rule guidance, and road safety insights to help prevent accidents and ensure safer journeys.
                             </p>
 

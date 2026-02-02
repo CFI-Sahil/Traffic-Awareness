@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
 const CongestionCard = ({ data }) => {
     const { congestionLevel, trend } = data || { congestionLevel: 0, trend: '+0%' };
 
@@ -104,16 +103,14 @@ const CongestionCard = ({ data }) => {
                     />
                 </svg>
 
-                {/* Center Text/Icon inside Gauge */}
                 <div className="absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
                     <p className="text-gray-400 text-xs tracking-widest uppercase">Status</p>
                     <p className="text-white font-bold text-lg mt-1 tracking-wide" style={{ color: color }}>
-                        {congestionLevel < 30 ? 'SMOOTH' : congestionLevel < 60 ? 'MODERATE' : 'HEAVY'}
+                        {congestionLevel < 30 ? 'Smooth' : congestionLevel < 60 ? 'Moderate' : 'Heavy'}
                     </p>
                 </div>
             </div>
 
-            {/* Bottom Info */}
             <div className="w-full grid grid-cols-2 gap-4 mt-6 z-10">
                 <div className="bg-white/5 rounded-lg p-3 text-center border border-white/5">
                     <p className="text-[10px] text-gray-500 uppercase">Avg Speed</p>

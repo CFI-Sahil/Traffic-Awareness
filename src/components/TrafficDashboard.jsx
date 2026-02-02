@@ -14,8 +14,8 @@ const TrafficDashboard = ({ cityData }) => {
         refetchInterval: 30000,
     });
 
-    if (isLoading) return <div className="text-center py-10 text-gray-500">Loading live data...</div>;
-    if (isError) return <div className="text-center py-10 text-red-500">Error connecting to Traffic Server.</div>;
+    if (isLoading) return <div className="text-center py-10 text-gray-500">Live traffic data loading...</div>;
+    if (isError) return <div className="text-center py-10 text-red-500">Error connecting to traffic servers.</div>;
 
     return (
         <div className="flex flex-col space-y-8 w-full">

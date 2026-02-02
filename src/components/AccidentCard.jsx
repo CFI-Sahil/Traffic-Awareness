@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import LiveTrafficMap from './LiveTrafficMap';
-
 const AccidentCard = ({ data, center }) => {
     const { accidentCount, recentIncidents } = data || { accidentCount: 0, recentIncidents: [] };
 
